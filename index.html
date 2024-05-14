@@ -1,7 +1,154 @@
 <!DOCTYPE html>
-<html>
-<body>
-<h1>Start</h1>
-<p>New</p>
+<html lang="en">
+
+<style>
+	:root {
+		--bodyText: #dae8f2;
+		--headerText: #dae8f2;
+		--titleText: #dae8f2;
+		--whiteSpace: #d5e1e8;
+		--hoverText: #98b2e3; 
+		--bodyFont: sans-serif;
+		--titleFont: sans-serif;
+	}
+
+	h1 {
+		
+		font-family: var(--titleFont);
+		color: var(--titleText);
+	}
+	h2 {
+		font-family: var(--titleFont);
+		color: var(--titleText);
+	}
+	h3 {
+		font-family: var(--titleFont);
+		color: var(--headerText);
+		font-size: 22px;
+	}
+
+	.website-background {
+		background: url('https://raw.githubusercontent.com/caite21/caite21.github.io/main/images/adobe_gen_city_wide.jpg');
+		color: var(--bodyText);
+		background-size: cover; /* Cover the entire element with the background image */
+		background-position: top;
+	}
+
+	.navbar {
+		color: var(--bodyText);
+		font-family: var(--bodyFont);
+		background-color: rgba(0, 62, 110, 0.3); /* Semi-transparent white */
+		backdrop-filter: blur(10px); /*  blur effect */
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* subtle shadow */
+		border-radius: 10px;
+		size: 20px;
+	}
+	.navbar:active {color:  var(--titleText);}
+	.navbar-brand {
+		font-family: var(--titleFont);
+		color: var(--titleText);
+	}
+	.navbar-brand:hover {color:  var(--hoverText);}
+	.nav-link {
+		color: var(--titleText);
+		font-family: var(--bodyFont);
+	}
+	.nav-link:hover {color:  var(--hoverText);}
+
+	.glass-background {
+		margin: 75px;
+		margin-top: 85px;
+		color: var(--bodyText);
+		background-color: rgba(25, 80, 110, 0.1); /* Semi-transparent white */
+		backdrop-filter: blur(4px); /*  blur effect */
+		border-radius: 10px;
+		box-shadow: 0px 0px 3px 0px rgba(255, 255, 255, 0.4); /* subtle shadow */
+	}
+
+	.glass-feature-box {
+		margin: 20px;
+		color: var(--bodyText);
+		background-color: rgba(25, 80, 110, 0.2); /* Semi-transparent white */
+		backdrop-filter: blur(10px); /*  blur effect */
+		border-radius: 10px;
+		padding: 20px;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* subtle shadow */
+		box-shadow: 0px 0px 3px 0px rgba(255, 255, 255, 0.2); /* subtle shadow */
+	}
+
+
+</style>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Include Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+
+
+<body class="website-background">
+	<div class="glass-background">
+
+		<body class="website-background"> 
+			<nav class="navbar navbar-expand-lg navbar-dark" style="navbar"> 
+				<a class="navbar-brand" href="{{ url_for('home') }}"  >CS</a> 
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+					aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav">
+
+						<!-- TODO Need to update page links -->
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('index') }}" >Home</a> 
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('index') }}" >GitHub</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('index') }}" >Garden</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('index') }}" >Contact</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</body>
+
+		<!-- Jumbotron Header -->
+		<div class="glass-feature-box">
+			<h1 class="display-4" >Welcome!</h1>
+			<h2 >My name is Caite Sklar</h2>
+		</div>
+
+		<!-- Feature Boxes -->
+		<div class="row">
+			<div class="col-md-4">
+				<div class="glass-feature-box">
+					<h3>Computer Engineering Graduate</h3>
+					<p>Wow! You are early to the party! This website is currently under construction. To find my GitHub account follow the link <a style="color: var(--bodyFont); text-decoration: underline;" href="https://github.com/caite21" target="_blank" rel="nofollow">here</a>.</p>
+
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="glass-feature-box">
+					<h3>Resume</h3>
+					<p>WIP</p>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="glass-feature-box">
+					<h3>Interests</h3>
+					<p>WIP</p>
+				</div>
+			</div>
+		</div>
+
+	</div>
 </body>
 </html>
