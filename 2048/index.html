@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<div id="game_border">
+    <p>welcome</p>
+
+    <div class="center">
+        <h1>2048!</h1>
+    </div>
+    <div class="row_split">
+        <div class="row center">
+            <h3>Score: </h3>
+            <h3 id="score">0</h3>
+        </div>
+        <button id="menu_button">Menu</button>
+    </div>
+
+    <div id="container_border">
+        <div id="container">
+
+            <!-- Background blocks -->
+            <div class="background_square" style="top: 0%; left: 0%">
+                <span class="number"></span>
+            </div>
+            <div class="background_square" style="top: 0%; left: 25%">
+                <span class="number"></span>
+            </div>
+            <div class="background_square" style="top: 0%; left: 50%">
+                <span class="number"></span>
+            </div>
+            <div class="background_square" style="top: 0%; left: 75%">
+                <span class="number"></span>
+            </div>
+            
+            <div class="background_square" style="top: 25%; left: 0%">
+                <span class="number"></span>
+            </div>
+            <div class="background_square" style="top: 25%; left: 25%">
+                <span class="number"></span>
+            </div>
+            <div class="background_square" style="top: 25%; left: 50%">
+                <span class="number"></span>
+            </div>
+            <div class="background_square" style="top: 25%; left: 75%">
+                <span class="number"></span>
+            </div>
+            
+            <div class="background_square" style="top: 50%; left: 0%">
+                <span class="number"></span>
+            </div>
+            <div class="background_square" style="top: 50%; left: 25%">
+                <span class="number"></span>
+            </div>
+            <div class="background_square" style="top: 50%; left: 50%">
+                <span class="number"></span>
+            </div>
+            <div class="background_square" style="top: 50%; left: 75%">
+                <span class="number"></span>
+            </div>
+
+            <div class="background_square" style="top: 75%; left: 0%">
+                <span class="number"></span>
+            </div>
+            <div class="background_square" style="top: 75%; left: 25%">
+                <span class="number"></span>
+            </div>
+            <div class="background_square" style="top: 75%; left: 50%">
+                <span class="number"></span>
+            </div>
+            <div class="background_square" style="top: 75%; left: 75%">
+                <span class="number"></span>
+            </div>
+
+            <!-- Moving blocks -->
+            <div class="square" id="sqr0">
+                <span class="number"></span>
+            </div>
+            <div class="square" id="sqr1">
+                <span class="number"></span>
+            </div>
+            <div class="square" id="sqr2">
+                <span class="number"></span>
+            </div>
+            <div class="square" id="sqr3">
+                <span class="number"></span>
+            </div>
+            <div class="square" id="sqr4">
+                <span class="number"></span>
+            </div>
+            <div class="square" id="sqr5">
+                <span class="number"></span>
+            </div>
+            <div class="square" id="sqr6">
+                <span class="number"></span>
+            </div>
+            <div class="square" id="sqr7">
+                <span class="number"></span>
+            </div>
+            <div class="square" id="sqr8">
+                <span class="number"></span>
+            </div>
+            <div class="square" id="sqr9">
+                <span class="number"></span>
+            </div>
+            <div class="square" id="sqr10">
+                <span class="number"></span>
+            </div>
+            <div class="square" id="sqr11">
+                <span class="number"></span>
+            </div>
+            <div class="square" id="sqr12">
+                <span class="number"></span>
+            </div>
+            <div class="square" id="sqr13">
+                <span class="number"></span>
+            </div>
+            <div class="square" id="sqr14">
+                <span class="number"></span>
+            </div>
+            <div class="square" id="sqr15">
+                <span class="number"></span>
+            </div>
+
+            <!-- Menus -->
+
+            <!-- Main menu -->
+            <div class="menu center" id="main_menu">
+                <div>
+                    <button id="play_button" onclick="play()">Play</button>
+                </div>
+                <div>
+                    <button>Compete</button>
+                </div>
+                <br>
+                <div>
+                    <h3>How to play:</h3> 
+                    <p>
+                        Gain points by merging the tiles. 
+                        Slide the tiles up, down, left, or right 
+                        using the arrow keys or by swiping. 
+                    </p>
+                </div>      
+            </div>
+
+            <!-- Username menu -->
+            <div class="sub_menu">
+                <h3>Enter your username: </h3>
+            </div> 
+
+            <!-- Game over menu -->
+            <div class="sub_menu center" id="game_over_menu">
+                <h1>Game Over</h1>
+                <div class="row center">
+                    <h2>Score:  </h2>
+                    <h2 id="game_over_score">0</h2>
+                </div>
+                <div>
+                    <button onclick="play()">New game</button>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+<br>
+
+<!-- Score lists -->
+<div class="section">
+    <h2 id="demo"></h2>
+    <br>
+    <div class="row_split">
+
+        <div class="score_list">
+            <h2>Leaderboard: </h2>
+            <div class="row_split">
+                <div class="row">
+                    <h3>1.</h3>
+                    <h3 id="leaderboard_3_name"></h3> 
+                </div>
+                <h3 id="leaderboard_1_score"></h3> 
+            </div>
+            <div class="row_split">
+                <div class="row">
+                    <h3>2.</h3>
+                    <h3 id="leaderboard_2_name"></h3> 
+                </div>
+                <h3 id="leaderboard_2_score"></h3> 
+            </div>
+            <div class="row_split">
+                <div class="row">
+                    <h3>3.</h3>
+                    <h3 id="leaderboard_3_name"></h3> 
+                </div>
+                <h3 id="leaderboard_3_score"></h3> 
+            </div>
+            
+        </div>
+        <div class="score_list">
+            <h2>Your top scores: </h2>
+            <h3 id="top_score_1"></h3> 
+            <h3 id="top_score_2"></h3> 
+            <h3 id="top_score_3"></h3> 
+        </div>
+
+    </div>
+</div>
+<br>
+
+
+<script src="js/script.js"></script>
+</body>
+
+
+</div>
+</html>
