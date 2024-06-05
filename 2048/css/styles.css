@@ -14,11 +14,11 @@
 @media (max-width: 400px) {
     :root {
         --main-width: 400px;
-        --h1-size: 40px;
-        --h2-size: 30px;
-        --h3-size: 22px;
-        --p-size: 18px;
-        --square-font-size: 45px;
+        --h1-size: 45px;
+        --h2-size: 35px;
+        --h3-size: 26px;
+        --p-size: 20px;
+        --square-font-size: 50px;
 
         --title-color: rgb(237, 96, 136);
     }
@@ -369,3 +369,12 @@ button:active {
 }
 
 
+/* Mobile screen */
+@media (max-width: 400px) {
+    #game_border {
+        margin: 2px;
+    }
+    .section {
+        margin: 2px;
+    }
+}

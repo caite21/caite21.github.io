@@ -503,7 +503,6 @@ container.addEventListener('keydown', async (event) => {
 });
 
 container.addEventListener('touchstart', function(event) {
-    if (isMoving) return; 
     if (event.touches.length === 1) { // Only handle single touch
         startX = event.touches[0].clientX;
         startY = event.touches[0].clientY;
@@ -516,9 +515,9 @@ container.addEventListener('touchmove', function(event) {
 });
 
 container.addEventListener('touchend', async function(event) {
-    if (isMoving) return; 
     if (event.changedTouches.length === 1) { // Only handle single touch
-
+        if (isMoving) return; 
+        
         blockMoved = false;
         isMoving = true;
         let endX = event.changedTouches[0].clientX;
