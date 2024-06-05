@@ -13,7 +13,7 @@
 /* Mobile screen */
 @media (max-width: 400px) {
     :root {
-        --main-width: 350px;
+        --main-width: 300px;
         --h1-size: 45px;
         --h2-size: 35px;
         --h3-size: 26px;

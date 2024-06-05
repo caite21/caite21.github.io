@@ -516,7 +516,6 @@ container.addEventListener('touchmove', function(event) {
 });
 
 container.addEventListener('touchend', async function(event) {
-    event.preventDefault();
     if (isMoving) return; 
     if (event.changedTouches.length === 1) { // Only handle single touch
 
