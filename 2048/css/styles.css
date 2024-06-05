@@ -1,3 +1,87 @@
+:root {
+    --main-width: 400px;
+    --h1-size: 45px;
+    --h2-size: 35px;
+    --h3-size: 26px;
+    --p-size: 20px;
+    --square-font-size: 50px;
+    
+    --text-color: rgb(161, 145, 128);
+    --title-color: black;
+}
+
+/* 1/4 screen and small mobile screens */
+@media (max-width: 575px) {
+    :root {
+        --main-width: 400px;
+        --h1-size: 45px;
+        --h2-size: 35px;
+        --h3-size: 26px;
+        --p-size: 20px;
+        --square-font-size: 50px;
+
+        --text-color: black;
+        --title-color: blue;
+    }
+}
+
+/* 1/2 window and arge mobile screens */
+@media (min-width: 576px) and (max-width: 767px) {
+    :root {
+        --main-width: 400px;
+        --h1-size: 45px;
+        --h2-size: 35px;
+        --h3-size: 26px;
+        --p-size: 20px;
+        --square-font-size: 50px;
+
+        --title-color: purple;
+    }
+}
+
+/* 3/4 window and large tablets */
+@media (min-width: 992px) and (max-width: 1199px) {
+    :root {
+        --main-width: 400px;
+        --h1-size: 45px;
+        --h2-size: 35px;
+        --h3-size: 26px;
+        --p-size: 20px;
+        --square-font-size: 50px;
+
+        --title-color: green;
+    }
+}
+
+
+/* 3/7 window and tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) {
+    :root {
+        --main-width: 400px;
+        --h1-size: 45px;
+        --h2-size: 35px;
+        --h3-size: 26px;
+        --p-size: 20px;
+        --square-font-size: 50px;
+
+        --title-color: yellow;
+    } 
+}
+
+/* Extra small screens (like minimized windows) */
+@media (max-width: 400px) {
+    :root {
+        --main-width: 400px;
+        --h1-size: 45px;
+        --h2-size: 35px;
+        --h3-size: 26px;
+        --p-size: 20px;
+        --square-font-size: 50px;
+
+        --title-color: red;
+    }
+}
+
 
 .color_codes {
     color: rgb(219, 209, 180);     /*2*/
@@ -16,32 +100,33 @@
 }
 
 h1 {
-    color: rgb(161, 145, 128);
-    font-size: 70px;
+    color: var(--title-color);
+    font-size: var(--h1-size);
     font-family: Calibri, sans-serif;
     font-weight: bolder;
     margin: 0px;
 }
+
 h2 {
-    color: rgb(161, 145, 128);
-    font-size: 40px;
+    color: var(--text-color);
+    font-size: var(--h2-size);
     font-family: Calibri, sans-serif;
     font-weight: bolder;
     margin-bottom: 10px;
     margin-top: 0px;
 }
 h3 {
-    color: rgb(161, 145, 128);
-    font-size: 30px;
+    color: var(--text-color);
+    font-size: var(--h3-size);
     font-family: Calibri, sans-serif;
     font-weight: bolder;
     margin: 2px;
 }
+
 p {
-    color: rgb(161, 145, 128);
-    font-size: 24px;
+    color: var(--text-color);
+    font-size: var(--p-size);
     font-family: Calibri, sans-serif;
-    font-weight: bolder;
     margin: 0px;
     margin-left: 10px;
     margin-right: 10px;
@@ -49,21 +134,31 @@ p {
 
 button {
     background-color: rgb(236, 230, 208);
-    font-size: 200%;
+    font-size: var(--h3-size);
     border-radius: 5px;
     padding-left: 10px;
     padding-right: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
-    color: rgb(161, 145, 128);
+    color: var(--text-color);
     font-family: Calibri, sans-serif;
     font-weight: bolder;
 }
+
 button:hover {
     background-color: rgb(245, 232, 190);   
 }
+
 button:active {
     background-color: rgb(232, 180, 112);
+}
+
+.exitButton {
+    height: fit-content;
+    font-weight: none;
+    font-size: var(--p-size);
+    margin-top: 0px;
+    border: none;
 }
 
 .row {
@@ -71,32 +166,46 @@ button:active {
     align-items: center;
     justify-content: center; 
 }
+
 .row_split {
     display: flex;
     justify-content: space-between; 
 }
+
 .center {
     text-align: center;
     align-items: center;
 }
 
+.left {
+    text-align: left;
+    align-items: left;
+    justify-content: left; 
+}
+
+.right {
+    text-align: right;
+    align-items: right;
+    justify-content: right; 
+}
+
 #game_border {
-    width: 82vi;
-    max-width: 700px;
+    width: var(--main-width);
     margin-top: 50px;
     margin:auto;
 }
+#game_border:focus {
+    outline: none;
+}
 
 .section {
-    width: 82vi;
-    max-width: 700px;
+    width: var(--main-width);
     margin-top: 50px;
     margin:auto;
 }
 
 #container_border {
-    width: 80vi;
-    max-width: 700px;
+    width: var(--main-width);
     aspect-ratio: 1 / 1;
     background-color: rgb(161, 145, 128);
     border-radius: 4px;
@@ -108,10 +217,9 @@ button:active {
 }
 
 #container {
-    width: 80vi;
-    max-width: 700px;
-    top: 2%;
-    left: 2%;
+    width: var(--main-width);
+    top: 3%;
+    left: 3%;
     aspect-ratio: 1 / 1;
     position: absolute;
     align-self: center;
@@ -120,8 +228,7 @@ button:active {
 
 .square {
     visibility: hidden;
-    width: 18vi;
-    max-width: 157.5px;
+    width: 22%;
     aspect-ratio: 1 / 1;
     border-radius: 4px;
     position: absolute;
@@ -131,14 +238,13 @@ button:active {
     justify-content: center;
     align-items: center;
     color:  rgb(155, 141, 124);
-    font-size: 400%;
+    font-size: var(--square-font-size);
     font-family: Calibri, sans-serif;
     font-weight: bolder;
 }
 
 .background_square {
-    width: 18vw;
-    max-width: 157.5px;
+    width: 22%;
     aspect-ratio: 1 / 1;
     background-color: rgb(179, 162, 144);
     border-radius: 4px;
@@ -148,6 +254,7 @@ button:active {
 }
 
 .menu {
+    z-index: 3;
     background-color: beige;
     width: 75%;
     aspect-ratio: 1 / 1;
@@ -155,35 +262,38 @@ button:active {
     border-radius: 15px;
     margin: 10% auto;
     padding: 2%;
-    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.5);
     align-items: center;
     align-content: center;
 }
 
 .sub_menu {
     visibility: hidden;
-    z-index: 2;
+    z-index: 4;
     background-color: rgb(234, 226, 195);
     width: 65%;
+    aspect-ratio: 0;
     position: absolute;
     left: 15%;
-    top: 35%;
+    top: 10%;
     border: solid;
-    border-width: 2px;
-    border-radius: 15px;
-    border-color: black;
-    padding: 2%;
-    box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.1);
-    align-items: center;
-    align-content: center;
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
 }
 
 .score_list {
-    background-color: beige;
-    width: 45%;
-    height: fit-content;
+    /* background-color: beige; */
     border-radius: 15px;
     padding: 10px;
+    /* box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.5); */
+}
+
+.textbox {
+    background-color: white;
+    border-radius: 4px;
+    color: var(--text-color);
+    font-size: var(--p-size);
+    font-family: Calibri, sans-serif;
+    width: 80%;
 }
 
 .slide { 
@@ -255,8 +365,21 @@ button:active {
     animation: indicateAnimation 0.5s ease-in-out;
 }
 
-
 .number {
     pointer-events: none;
     color: white;
+}
+
+/* Large desktops and full windows */
+@media (min-width: 1200px) {
+    :root {
+        --main-width: 400px;
+        --h1-size: 45px;
+        --h2-size: 35px;
+        --h3-size: 26px;
+        --p-size: 20px;
+        --square-font-size: 50px;
+        
+        --title-color: red;
+    }
 }
