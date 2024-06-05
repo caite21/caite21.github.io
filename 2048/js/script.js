@@ -1,4 +1,5 @@
 // globals
+let isCompeting = false;
 let score = 0;
 const board_len = 4;
 const step = 25;
@@ -17,7 +18,23 @@ const square_colours = {2: "rgb(219, 209, 180)",
                         512: "rgb(164, 188, 122)", 
                         1024: "rgb(239, 97, 97)"};
 
-                        
+
+function update_lists() {
+    document.getElementById('top_score_1').value = getCookie('top_score_1');    
+    document.getElementById('top_score_2').value = getCookie('top_score_2');
+    document.getElementById('top_score_3').value = getCookie('top_score_3');
+}
+
+function save_score() {
+    if (score > getCookie('top_score_1')) {
+        setCookie('top_score_1', score);
+    } else if (score > getCookie('top_score_2')) {
+        setCookie('top_score_2', score);
+    } else if (score > getCookie('top_score_3')) {
+        setCookie('top_score_3', score);
+    }
+}
+                     
 
 function activate_test_grid() {
     let value_arr =[[2, 16, 4, 1024],
@@ -318,8 +335,39 @@ function loseCondition() {
     return false;
 }
 
+function openMenu() {
+    document.getElementById('main_menu').style.visibility = 'visible';
+}
+
+function setCookie(name, value) {
+    expires = "; expires=Thu, 1 Jan 2026 12:00:00 GMT";
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function openCompeteMenu() {
+    document.getElementById('compete_menu').style.visibility = 'visible';
+    document.getElementById("username").value = getCookie('username');
+    
+}
+
 function play() {
     // reset
+    score = 0;
     square_arr = [];
     inactive_sqrs = [];
     next_location = [];
@@ -328,63 +376,156 @@ function play() {
     for (let row = 0; row < board_len; row++) {
         let row_arr = [];
         for (let col = 0; col < board_len; col++) {
-            let sqr = {active: false, value: 0, elem: square_elements[count_elems]};
-            inactive_sqrs.push(sqr)
+            let sqr = {elem: square_elements[count_elems]};
             row_arr[col] = null;
             count_elems++;
+            deactivate(sqr);
         }
         square_arr[row] = row_arr;
     }
 
+    // todo: better function to handle closing all menus
     animate( document.getElementById("main_menu"), 'hide_menu');
     animate( document.getElementById("game_over_menu"), 'hide_menu');
+    animate( document.getElementById("compete_menu"), 'hide_menu');
+
+    document.getElementById('game_border').focus();
+
+    if (isCompeting) { 
+
+    } else {
+        document.getElementById("score_header").innerHTML = ``;
+    }
     setTimeout(() => {
         document.getElementById("main_menu").style.visibility = "hidden";
         document.getElementById("game_over_menu").style.visibility = "hidden";
+        document.getElementById("compete_menu").style.visibility = "hidden";
+
+        document.getElementById('play_button').innerHTML = 'New Game';
     }, 180);
     setTimeout(() => {
-        // activate_test_grid();
-        // display_positions();
+        // activate_test_grid(); display_positions();
         generate_new();
         generate_new();
     }, 300);
 
 }
 
+function compete_play() {
+    let username = document.getElementById("username").value; 
+    if (username != "") {
+        document.getElementById("score_header").innerHTML = `${username}'s `;
+        this.document.cookie = `username=${username}; 
+                                expires=Thu, 1 Jan 2026 12:00:00 GMT; 
+                                current_score=0; 
+                                best_score1=1000; 
+                                best_score2=100; 
+                                best_score3=10;`;
+        isCompeting = true;
+        play();
+    }
+    else {
+        animate(document.getElementById("username"), 'merge');
+    }
+}
 
-// main
-// activate(0,0,4);
-// generate_new();
-// generate_new();
+function stopCompeting() {
+    isCompeting = false;
+    document.getElementById("score_header").innerHTML = ``;
+}
 
-document.getElementById("demo").innerHTML = "Started";   
 
-document.addEventListener('DOMContentLoaded', () => {
-    let ms = 50;
-    let isMoving = false;
 
-    document.addEventListener('keydown', async (event) => {
+let ms = 50;
+let isMoving = false;
+let startX = 0;
+let startY = 0;
+let container = document.getElementById('game_border');
+update_lists();
+
+container.addEventListener('keydown', async (event) => {
+    event.preventDefault();
+    if (isMoving) return; 
+    
+    blockMoved = false;
+    isMoving = true;
+
+    switch(event.key) {
+        case 'ArrowUp':
+            blockMoved = up();
+            break;
+        case 'ArrowDown':
+            blockMoved = down();
+            break;
+        case 'ArrowLeft':
+            blockMoved = left();
+            break;
+        case 'ArrowRight':
+            blockMoved = right();
+            break;
+        default:
+            break;
+    }
+    await sleep(ms);
+    if (blockMoved) {
+        generate_new();
+        if (loseCondition()) {
+            animate(document.getElementById("game_over_menu"), 'appear');
+            document.getElementById("game_over_menu").style.visibility = "visible";
+            document.getElementById("game_over_score").innerHTML = score;
+            save_score();
+            update_lists();
+            stopCompeting();
+        }
+    }
+    isMoving = false;
+});
+
+
+container.addEventListener('touchstart', function(event) {
+    if (isMoving) return; 
+    if (event.touches.length === 1) { // Only handle single touch
+        startX = event.touches[0].clientX;
+        startY = event.touches[0].clientY;
+        startTime = new Date().getTime(); // Record the time when the touch starts
+    }
+});
+
+container.addEventListener('touchmove', function(event) {
+    event.preventDefault();
+});
+
+container.addEventListener('touchend', async function(event) {
+    if (event.changedTouches.length === 1) { // Only handle single touch
         if (isMoving) return; 
-        
+
         blockMoved = false;
         isMoving = true;
-        switch(event.key) {
-            case 'ArrowUp':
-                blockMoved = up();
-                break;
-            case 'ArrowDown':
-                blockMoved = down();
-                break;
-            case 'ArrowLeft':
-                blockMoved = left();
-                break;
-            case 'ArrowRight':
-                blockMoved = right();
-                break;
-            default:
-                break;
+        let endX = event.changedTouches[0].clientX;
+        let endY = event.changedTouches[0].clientY;
+        let deltaX = endX - startX;
+        let deltaY = endY - startY;
+        let elapsedTime = new Date().getTime() - startTime;
+
+        // Thresholds
+        let threshold = 50; // Minimum distance for a swipe
+        let allowedTime = 300; // Maximum time for a swipe
+
+        if (elapsedTime <= allowedTime) {
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) >= threshold) {
+                if (deltaX > 0) {
+                    blockMoved = right();
+                } else {
+                    blockMoved = left();
+                }
+            } else if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) >= threshold) {
+                if (deltaY > 0) {
+                    blockMoved = down();
+                } else {
+                    blockMoved = up();
+                }
+            }
         }
-        // reset_for_next_move();
         await sleep(ms);
         if (blockMoved) {
             generate_new();
@@ -392,14 +533,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 animate(document.getElementById("game_over_menu"), 'appear');
                 document.getElementById("game_over_menu").style.visibility = "visible";
                 document.getElementById("game_over_score").innerHTML = score;
-                game_over_score
+                stopCompeting();
             }
-            // check lose condition
-            // update score 
         }
-
         isMoving = false;
-    });
+    }
 });
-
-
