@@ -8,12 +8,10 @@
 </head>
 
 <body>
-
-<div id="game_border" tabindex="0">
+<div id="game_border" tabindex="0" >
     <div >
         <h1>2048</h1>
     </div>
-
     <div class="row_split">
         <div class="row center">
             <h3 id="score_header"></h3>
@@ -24,6 +22,7 @@
     </div>
 
     <div id="container_border">
+        
         <div id="container">
 
             <!-- Background blocks -->
@@ -129,6 +128,7 @@
                 <span class="number"></span>
             </div>
 
+            
             <!-- Menus -->
 
             <!-- Main menu -->
@@ -154,8 +154,9 @@
                 </div>      
             </div>
 
+            
             <!-- Compete menu -->
-            <div class="menu sub_menu" id="compete_menu">
+            <div class="menu sub_menu" id="compete_menu" >
                 <div class="right">
                     <button class="exitButton"
                     onclick="document.getElementById('compete_menu').style.visibility = 'hidden';"
@@ -168,14 +169,24 @@
                 </p>
                 <div class="row left">
                     <p>Name: </p>
-                    <form>
-                        <input class="textbox" type="username" id="username" name="username">
-                    </form>
+                    <p id="username"></p>
+                    <div class="right">
+                        <button id="set_username_button" onclick="set_username()">edit</button>
+                    </div>
                 </div>
+                <!-- <div class="row left">
+                    <p>Name: </p>
+                    <form>
+                        <input class="textbox" type="text" id="username" name="username">
+                    </form>
+                    <br>
+                </div> -->
                 <div class="center">
                     <button id="compete_play_button" onclick="compete_play()">Go</button>
                 </div>
+                
             </div>
+            
 
             <!-- Game over menu -->
             <div class="menu sub_menu center" id="game_over_menu">
@@ -194,14 +205,15 @@
                 </div>
             </div> 
         </div>
-    </div>
+    </div>  
 </div>
+     
 <br>
 
 <!-- Score lists -->
 <div class="section">
     <p id="demo"></p>
-    <br>
+
 
     <div class="score_list">
         <h3>Today's Leaderboard: </h3>
@@ -237,6 +249,7 @@
             <p>3.</p>
             <p id="top_score_3">0</p> 
         </div>
+        
     </div>
 
 </div>

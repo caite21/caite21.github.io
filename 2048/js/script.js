@@ -20,19 +20,28 @@ const square_colours = {2: "rgb(219, 209, 180)",
 
 
 function update_lists() {
-    document.getElementById('top_score_1').value = getCookie('top_score_1');    
-    document.getElementById('top_score_2').value = getCookie('top_score_2');
-    document.getElementById('top_score_3').value = getCookie('top_score_3');
+    document.getElementById('top_score_1').innerHTML = getCookie('top_score_1');    
+    document.getElementById('top_score_2').innerHTML = getCookie('top_score_2');
+    document.getElementById('top_score_3').innerHTML = getCookie('top_score_3');
 }
 
 function save_score() {
-    if (score > getCookie('top_score_1')) {
+    let score1 = getCookie('top_score_1');
+    let score2 = getCookie('top_score_2');
+    let score3 = getCookie('top_score_3');
+
+    if (score > score1) {
         setCookie('top_score_1', score);
-    } else if (score > getCookie('top_score_2')) {
+        setCookie('top_score_2', score1);
+        setCookie('top_score_3', score2);
+    } else if (score > score2) {
         setCookie('top_score_2', score);
-    } else if (score > getCookie('top_score_3')) {
+        setCookie('top_score_3', score2);
+    } else if (score > score3) {
         setCookie('top_score_3', score);
-    }
+    } 
+    document.getElementById('demo').innerHTML = `saved: ${score}`;
+    update_lists();
 }
                      
 
@@ -360,8 +369,16 @@ function getCookie(cname) {
 }
 
 function openCompeteMenu() {
+    
+    save_score();
+
     document.getElementById('compete_menu').style.visibility = 'visible';
-    document.getElementById("username").value = getCookie('username');
+    let username = getCookie("username");
+    if (username == "") {
+        set_username();
+        username = getCookie("username");
+    }
+    document.getElementById("username").innerHTML = username;
     
 }
 
@@ -411,21 +428,22 @@ function play() {
 
 }
 
+function set_username() {
+    user = prompt("Please enter your name:","");
+    if (user != "" && user != null) {
+        setCookie("username", user, 30);
+    }
+}
+
 function compete_play() {
-    let username = document.getElementById("username").value; 
+    let username = document.getElementById("username").innerHTML; 
     if (username != "") {
         document.getElementById("score_header").innerHTML = `${username}'s `;
-        this.document.cookie = `username=${username}; 
-                                expires=Thu, 1 Jan 2026 12:00:00 GMT; 
-                                current_score=0; 
-                                best_score1=1000; 
-                                best_score2=100; 
-                                best_score3=10;`;
         isCompeting = true;
         play();
     }
     else {
-        animate(document.getElementById("username"), 'merge');
+        animate(document.getElementById("set_username_button"), 'merge');
     }
 }
 
@@ -474,7 +492,6 @@ container.addEventListener('keydown', async (event) => {
             document.getElementById("game_over_menu").style.visibility = "visible";
             document.getElementById("game_over_score").innerHTML = score;
             save_score();
-            update_lists();
             stopCompeting();
         }
     }
@@ -483,6 +500,7 @@ container.addEventListener('keydown', async (event) => {
 
 
 container.addEventListener('touchstart', function(event) {
+    event.preventDefault();
     if (isMoving) return; 
     if (event.touches.length === 1) { // Only handle single touch
         startX = event.touches[0].clientX;
@@ -496,6 +514,7 @@ container.addEventListener('touchmove', function(event) {
 });
 
 container.addEventListener('touchend', async function(event) {
+    event.preventDefault();
     if (event.changedTouches.length === 1) { // Only handle single touch
         if (isMoving) return; 
 
@@ -508,8 +527,8 @@ container.addEventListener('touchend', async function(event) {
         let elapsedTime = new Date().getTime() - startTime;
 
         // Thresholds
-        let threshold = 50; // Minimum distance for a swipe
-        let allowedTime = 300; // Maximum time for a swipe
+        let threshold = 30; // Minimum distance for a swipe
+        let allowedTime = 1000; // Maximum time for a swipe
 
         if (elapsedTime <= allowedTime) {
             if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) >= threshold) {

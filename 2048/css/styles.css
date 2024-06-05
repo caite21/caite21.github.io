@@ -10,8 +10,22 @@
     --title-color: black;
 }
 
+/* Mobile screen */
+@media (max-width: 400px) {
+    :root {
+        --main-width: 400px;
+        --h1-size: 45px;
+        --h2-size: 35px;
+        --h3-size: 26px;
+        --p-size: 20px;
+        --square-font-size: 50px;
+
+        --title-color: yellow;
+    }
+}
+
 /* 1/4 screen and small mobile screens */
-@media (max-width: 575px) {
+@media (min-width: 401px) and (max-width: 575px) {
     :root {
         --main-width: 400px;
         --h1-size: 45px;
@@ -25,7 +39,7 @@
     }
 }
 
-/* 1/2 window and arge mobile screens */
+/* 1/2 window and large mobile screens */
 @media (min-width: 576px) and (max-width: 767px) {
     :root {
         --main-width: 400px;
@@ -39,8 +53,8 @@
     }
 }
 
-/* 3/4 window and large tablets */
-@media (min-width: 992px) and (max-width: 1199px) {
+/* 3/4 window*/
+@media (min-width: 768px) and (max-width: 1199px){
     :root {
         --main-width: 400px;
         --h1-size: 45px;
@@ -53,9 +67,8 @@
     }
 }
 
-
-/* 3/7 window and tablets and small desktops */
-@media (min-width: 768px) and (max-width: 991px) {
+/* Full windows */
+@media (min-width: 1200px) {
     :root {
         --main-width: 400px;
         --h1-size: 45px;
@@ -63,21 +76,7 @@
         --h3-size: 26px;
         --p-size: 20px;
         --square-font-size: 50px;
-
-        --title-color: yellow;
-    } 
-}
-
-/* Extra small screens (like minimized windows) */
-@media (max-width: 400px) {
-    :root {
-        --main-width: 400px;
-        --h1-size: 45px;
-        --h2-size: 35px;
-        --h3-size: 26px;
-        --p-size: 20px;
-        --square-font-size: 50px;
-
+        
         --title-color: red;
     }
 }
@@ -254,7 +253,7 @@ button:active {
 }
 
 .menu {
-    z-index: 3;
+    /* z-index: 3; */
     background-color: beige;
     width: 75%;
     aspect-ratio: 1 / 1;
@@ -269,7 +268,7 @@ button:active {
 
 .sub_menu {
     visibility: hidden;
-    z-index: 4;
+    /* z-index: 4; */
     background-color: rgb(234, 226, 195);
     width: 65%;
     aspect-ratio: 0;
@@ -288,6 +287,7 @@ button:active {
 }
 
 .textbox {
+    /* z-index: 4; */
     background-color: white;
     border-radius: 4px;
     color: var(--text-color);
@@ -357,7 +357,7 @@ button:active {
 }
 
 .merge {
-    z-index: 2;
+    /* z-index: 2; */
     animation: mergeAnimation 0.2s ease-in-out;
 }
 
@@ -370,16 +370,4 @@ button:active {
     color: white;
 }
 
-/* Large desktops and full windows */
-@media (min-width: 1200px) {
-    :root {
-        --main-width: 400px;
-        --h1-size: 45px;
-        --h2-size: 35px;
-        --h3-size: 26px;
-        --p-size: 20px;
-        --square-font-size: 50px;
-        
-        --title-color: red;
-    }
-}
+
