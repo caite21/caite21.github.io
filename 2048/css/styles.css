@@ -5,36 +5,35 @@
     --h3-size: 26px;
     --p-size: 20px;
     --square-font-size: 50px;
-    
-    --text-color: rgb(161, 145, 128);
+     
+    --text-color: rgb(108, 99, 91);
     --title-color: black;
 }
 
 /* Mobile screen */
 @media (max-width: 400px) {
     :root {
-        --main-width: 400px;
+        --main-width: 350px;
         --h1-size: 45px;
         --h2-size: 35px;
         --h3-size: 26px;
         --p-size: 20px;
         --square-font-size: 50px;
 
-        --title-color: yellow;
+        --title-color: rgb(237, 96, 136);
     }
 }
 
 /* 1/4 screen and small mobile screens */
 @media (min-width: 401px) and (max-width: 575px) {
     :root {
-        --main-width: 400px;
+        --main-width: 350px;
         --h1-size: 45px;
         --h2-size: 35px;
         --h3-size: 26px;
         --p-size: 20px;
         --square-font-size: 50px;
 
-        --text-color: black;
         --title-color: blue;
     }
 }
@@ -70,7 +69,7 @@
 /* Full windows */
 @media (min-width: 1200px) {
     :root {
-        --main-width: 400px;
+        --main-width: 500px;
         --h1-size: 45px;
         --h2-size: 35px;
         --h3-size: 26px;
@@ -217,8 +216,8 @@ button:active {
 
 #container {
     width: var(--main-width);
-    top: 3%;
-    left: 3%;
+    top: 2.6%;
+    left: 2.6%;
     aspect-ratio: 1 / 1;
     position: absolute;
     align-self: center;
@@ -253,7 +252,7 @@ button:active {
 }
 
 .menu {
-    /* z-index: 3; */
+    z-index: 3;
     background-color: beige;
     width: 75%;
     aspect-ratio: 1 / 1;
@@ -263,12 +262,11 @@ button:active {
     padding: 2%;
     box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.5);
     align-items: center;
-    align-content: center;
 }
 
 .sub_menu {
     visibility: hidden;
-    /* z-index: 4; */
+    z-index: 4;
     background-color: rgb(234, 226, 195);
     width: 65%;
     aspect-ratio: 0;
@@ -307,7 +305,7 @@ button:active {
         transform: scale(1);
     }
     60% {
-        transform: scale(1.15);
+        transform: scale(1.2);
     }
     100% {
         transform: scale(1);
@@ -316,7 +314,7 @@ button:active {
 
 @keyframes appearAnimation {
     0% {
-        transform: scale(0.3);
+        transform: scale(0.2);
     }
     100% {
         transform: scale(1);
@@ -342,7 +340,7 @@ button:active {
         transform: scale(1);
     }
     60% {
-        transform: scale(1.15);
+        transform: scale(1.1);
     }
     100% {
         transform: scale(0);

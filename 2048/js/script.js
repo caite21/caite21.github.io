@@ -19,32 +19,6 @@ const square_colours = {2: "rgb(219, 209, 180)",
                         1024: "rgb(239, 97, 97)"};
 
 
-function update_lists() {
-    document.getElementById('top_score_1').innerHTML = getCookie('top_score_1');    
-    document.getElementById('top_score_2').innerHTML = getCookie('top_score_2');
-    document.getElementById('top_score_3').innerHTML = getCookie('top_score_3');
-}
-
-function save_score() {
-    let score1 = getCookie('top_score_1');
-    let score2 = getCookie('top_score_2');
-    let score3 = getCookie('top_score_3');
-
-    if (score > score1) {
-        setCookie('top_score_1', score);
-        setCookie('top_score_2', score1);
-        setCookie('top_score_3', score2);
-    } else if (score > score2) {
-        setCookie('top_score_2', score);
-        setCookie('top_score_3', score2);
-    } else if (score > score3) {
-        setCookie('top_score_3', score);
-    } 
-    document.getElementById('demo').innerHTML = `saved: ${score}`;
-    update_lists();
-}
-                     
-
 function activate_test_grid() {
     let value_arr =[[2, 16, 4, 1024],
                     [2, 8, 256, 128],
@@ -55,6 +29,20 @@ function activate_test_grid() {
         for (let col = 0; col < board_len; col++) {
             if (value_arr[row][col] != 0) {
                 activate(row, col, value_arr[row][col]);
+            }
+        }
+    }
+}
+
+function display_positions() {
+    for (let row = 0; row < board_len; row++) {
+        for (let col = 0; col < board_len; col++) {
+            let sqr = square_arr[row][col];
+            if (sqr != null) {
+                sqr.elem.style.top = `${row * step}%`;
+                sqr.elem.style.left = `${col * step}%`;
+                sqr.elem.innerHTML = `${sqr.value}`;
+                sqr.elem.style.visibility = 'visible';
             }
         }
     }
@@ -89,20 +77,6 @@ function deactivate(sqr) {
     sqr.value = 0; 
     sqr.elem.classList.remove('slide');
     sqr.elem.style.visibility = 'hidden';
-}
-
-function display_positions() {
-    for (let row = 0; row < board_len; row++) {
-        for (let col = 0; col < board_len; col++) {
-            let sqr = square_arr[row][col];
-            if (sqr != null) {
-                sqr.elem.style.top = `${row * step}%`;
-                sqr.elem.style.left = `${col * step}%`;
-                sqr.elem.innerHTML = `${sqr.value}`;
-                sqr.elem.style.visibility = 'visible';
-            }
-        }
-    }
 }
 
 function display_move() {
@@ -352,6 +326,7 @@ function setCookie(name, value) {
     expires = "; expires=Thu, 1 Jan 2026 12:00:00 GMT";
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
+
 function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
@@ -368,10 +343,38 @@ function getCookie(cname) {
     return "";
 }
 
-function openCompeteMenu() {
-    
-    save_score();
+function update_lists() {
+    document.getElementById('top_score_1').innerHTML = getCookie('top_score_1');    
+    document.getElementById('top_score_2').innerHTML = getCookie('top_score_2');
+    document.getElementById('top_score_3').innerHTML = getCookie('top_score_3');
 
+    document.getElementById('demo').innerHTML = getCookie('username');
+}
+
+function save_score() {
+    if (isCompeting) {
+
+    }
+
+    let score1 = getCookie('top_score_1');
+    let score2 = getCookie('top_score_2');
+    let score3 = getCookie('top_score_3');
+
+    if (score > score1) {
+        setCookie('top_score_1', score);
+        setCookie('top_score_2', score1);
+        setCookie('top_score_3', score2);
+    } else if (score > score2) {
+        setCookie('top_score_2', score);
+        setCookie('top_score_3', score2);
+    } else if (score > score3) {
+        setCookie('top_score_3', score);
+    } 
+    update_lists();
+}
+   
+
+function openCompeteMenu() {
     document.getElementById('compete_menu').style.visibility = 'visible';
     let username = getCookie("username");
     if (username == "") {
@@ -431,7 +434,8 @@ function play() {
 function set_username() {
     user = prompt("Please enter your name:","");
     if (user != "" && user != null) {
-        setCookie("username", user, 30);
+        setCookie("username", user);
+        update_lists();
     }
 }
 
@@ -448,8 +452,8 @@ function compete_play() {
 }
 
 function stopCompeting() {
-    isCompeting = false;
     document.getElementById("score_header").innerHTML = ``;
+    isCompeting = false;
 }
 
 
@@ -498,9 +502,7 @@ container.addEventListener('keydown', async (event) => {
     isMoving = false;
 });
 
-
 container.addEventListener('touchstart', function(event) {
-    event.preventDefault();
     if (isMoving) return; 
     if (event.touches.length === 1) { // Only handle single touch
         startX = event.touches[0].clientX;
@@ -515,8 +517,8 @@ container.addEventListener('touchmove', function(event) {
 
 container.addEventListener('touchend', async function(event) {
     event.preventDefault();
+    if (isMoving) return; 
     if (event.changedTouches.length === 1) { // Only handle single touch
-        if (isMoving) return; 
 
         blockMoved = false;
         isMoving = true;
