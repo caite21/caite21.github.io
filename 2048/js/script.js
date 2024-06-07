@@ -1,6 +1,7 @@
 // globals
 let isCompeting = false;
 let score = 0;
+let level = 0;
 const board_len = 4;
 const step = 25;
 let square_arr = [];
@@ -9,21 +10,35 @@ let next_location = [];
 const square_elements  = Array.from(document.getElementsByClassName('square'));
 const square_colours = {2: "rgb(219, 209, 180)", 
                         4: "rgb(220, 202, 143)", 
-                        8: "rgb(232, 180, 112)",  
-                        16: "rgb(242, 157, 117)", 
-                        32: "rgb(244, 147, 175)", 
-                        64: "rgb(217, 158, 217)",
-                        128: "rgb(174, 152, 236)", 
-                        256: "rgb(118, 194, 190)", 
-                        512: "rgb(164, 188, 122)", 
-                        1024: "rgb(239, 97, 97)"};
+                        8: "rgb(232, 177, 105)",  
+                        16: "rgb(246, 145, 108)", 
+                        32: "rgb(249, 146, 168)", 
+                        64: "rgb(212, 152, 227)",
+                        128: "rgb(153, 170, 255)", 
+                        256: "rgb(136, 220, 201)", 
+                        512: "rgb(172, 220, 116)", 
+                        1024: "rgb(239, 97, 97)",
+                        2048: "rgb(198, 71, 145)",
+                        4096: "rgb(76, 92, 197)",
+                        8192: "rgb(61, 161, 62)",
+                        16384: "rgb(159, 8, 8)",
+                        32768: "rgb(220, 181, 23)",
+                        65536: "rgb(108, 0, 126)",
+                        'white':  "rgb(243, 235, 211)"  
+                        };
+// initialize page
+refresh_lists();
+level = getCookie('level') || 0;
+document.getElementById("level").innerHTML = level; 
+document.getElementById("score_header").innerHTML = getCookie('username'); 
+if (level >= 10) document.documentElement.style.setProperty('--title-color', square_colours[2**level]);
 
 
 function activate_test_grid() {
-    let value_arr =[[2, 16, 4, 1024],
-                    [2, 8, 256, 128],
-                    [4, 2, 4, 64],
-                    [0, 512, 16, 32]];
+    let value_arr =[[2, 2, 4, 8],
+                    [16, 32, 64, 128],
+                    [256, 512, 1024, 2048],
+                    [4096, 8192, 16384, 32768]];
 
     for (let row = 0; row < board_len; row++) {
         for (let col = 0; col < board_len; col++) {
@@ -52,9 +67,25 @@ function animate(elem, CSS_class_name) {
     // clear all animations
     elem.classList.remove('appear');
     elem.classList.remove('merge');
+    elem.classList.remove('mergeMed');
+    elem.classList.remove('mergeLarge');
     elem.classList.remove('indicate');
+    elem.classList.remove('hide_menu');
+    elem.classList.remove('open_menu');
+
     void elem.offsetWidth;
     elem.classList.add(CSS_class_name);
+}
+
+function adjust_large_sqr(sqr) {
+    if (sqr.value < 1000) return;
+
+    if (sqr.value >= 10000) {
+        sqr.elem.classList.add('square_5_digits');
+    }
+    else if (sqr.value >= 1000) {
+        sqr.elem.classList.add('square_4_digits');
+    }
 }
 
 function activate(row, col, value) {
@@ -67,6 +98,7 @@ function activate(row, col, value) {
     sqr.elem.style.left = `${col * step}%`;
     sqr.elem.style.backgroundColor =  square_colours[value];
     sqr.elem.innerHTML = `${value}`;
+    adjust_large_sqr(sqr);
     sqr.elem.style.visibility = 'visible';
     animate(sqr.elem, 'appear'); 
 }
@@ -75,7 +107,7 @@ function deactivate(sqr) {
     sqr.active = false;
     inactive_sqrs.push(sqr);
     sqr.value = 0; 
-    sqr.elem.classList.remove('slide');
+    sqr.elem.className = 'square';
     sqr.elem.style.visibility = 'hidden';
 }
 
@@ -91,6 +123,7 @@ function display_move() {
         sqr.elem.style.top = `${y * step}%`;
         sqr.elem.style.backgroundColor =  square_colours[sqr.value];
         sqr.elem.innerHTML = `${sqr.value}`;
+        adjust_large_sqr(sqr);
 
         if (!sqr.active) {
             deactivate(sqr);
@@ -101,6 +134,32 @@ function display_move() {
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function update_level() {
+    level++;
+    setCookie('level', level);
+    document.getElementById("level").innerHTML = level; 
+    if (level >= 10) document.documentElement.style.setProperty('--title-color', square_colours[2**level]);
+
+    }
+
+function merge(sqr1, sqr2) {
+    sqr1.value *= 2;
+    sqr2.active = false;
+
+    if (sqr1.value < 2048) {
+        animate(sqr1.elem, 'merge');
+    } else if (sqr1.value < 10000) {
+        animate(sqr1.elem, 'mergeMed');
+    } else if (sqr1.value < 100000) {
+        animate(sqr1.elem, 'mergeLarge');
+    } 
+
+    score += sqr1.value;
+    if (sqr1.value > 2**level) {
+        update_level();
+    }
 }
 
 function up() {
@@ -121,12 +180,9 @@ function up() {
                     }
                     else if (square_arr[i][col].value == square_arr[j][col].value) {
                         // merge with spot
-                        square_arr[j][col].value *= 2;
-                        square_arr[i][col].active = false;
+                        merge(square_arr[j][col], square_arr[i][col]);
                         next_location.push([square_arr[i][col], j, col]);
                         next_location.push([square_arr[j][col], j, col]);
-                        animate(square_arr[j][col].elem, 'merge');
-                        score += square_arr[j][col].value;
                         square_arr[i][col] = null;
                         j++;
                         moved = true;
@@ -162,12 +218,9 @@ function down() {
                     }
                     else if (square_arr[i][col].value == square_arr[j][col].value) {
                         // merge with spot
-                        square_arr[j][col].value *= 2;
-                        square_arr[i][col].active = false;
+                        merge(square_arr[j][col], square_arr[i][col]);
                         next_location.push([square_arr[i][col], j, col]);
                         next_location.push([square_arr[j][col], j, col]);
-                        animate(square_arr[j][col].elem, 'merge');
-                        score += square_arr[j][col].value;
                         square_arr[i][col] = null;
                         j--;
                         moved = true;
@@ -203,12 +256,9 @@ function left() {
                     }
                     else if (square_arr[row][i].value == square_arr[row][j].value) {
                         // merge 
-                        square_arr[row][j].value *= 2;
-                        square_arr[row][i].active = false;
+                        merge(square_arr[row][j], square_arr[row][i]);
                         next_location.push([square_arr[row][i], row, j]);
                         next_location.push([square_arr[row][j], row, j]);
-                        animate(square_arr[row][j].elem, 'merge');
-                        score += square_arr[row][j].value;
                         square_arr[row][i] = null;
                         j++;
                         moved = true;
@@ -244,12 +294,9 @@ function right() {
                     }
                     else if (square_arr[row][i].value == square_arr[row][j].value) {
                         // merge 
-                        square_arr[row][j].value *= 2;
-                        square_arr[row][i].active = false;
+                        merge(square_arr[row][j], square_arr[row][i]);
                         next_location.push([square_arr[row][i], row, j]);
                         next_location.push([square_arr[row][j], row, j]);
-                        animate(square_arr[row][j].elem, 'merge');
-                        score += square_arr[row][j].value;
                         square_arr[row][i] = null;
                         j--;
                         moved = true;
@@ -319,7 +366,15 @@ function loseCondition() {
 }
 
 function openMenu() {
-    document.getElementById('main_menu').style.visibility = 'visible';
+    document.getElementById('main_menu').style.display = 'block';
+    document.getElementById('scores_menu').style.display = 'none';
+    animate(document.getElementById('main_menu'), 'open_menu');
+}
+
+function openScoresMenu() {
+    document.getElementById('scores_menu').style.display = 'block';
+    document.getElementById('main_menu').style.display = 'none';
+    animate(document.getElementById('scores_menu'), 'open_menu');
 }
 
 function setCookie(name, value) {
@@ -343,7 +398,7 @@ function getCookie(cname) {
     return "";
 }
 
-function update_lists() {
+function refresh_lists() {
     document.getElementById('top_score_1').innerHTML = getCookie('top_score_1');    
     document.getElementById('top_score_2').innerHTML = getCookie('top_score_2');
     document.getElementById('top_score_3').innerHTML = getCookie('top_score_3');
@@ -370,7 +425,7 @@ function save_score() {
     } else if (score > score3) {
         setCookie('top_score_3', score);
     } 
-    update_lists();
+    refresh_lists();
 }
    
 
@@ -382,12 +437,13 @@ function openCompeteMenu() {
         username = getCookie("username");
     }
     document.getElementById("username").innerHTML = username;
-    
+    animate(document.getElementById('compete_menu'), 'open_menu');
 }
 
 function play() {
     // reset
     score = 0;
+    level = 0;
     square_arr = [];
     inactive_sqrs = [];
     next_location = [];
@@ -409,6 +465,7 @@ function play() {
     animate( document.getElementById("game_over_menu"), 'hide_menu');
     animate( document.getElementById("compete_menu"), 'hide_menu');
 
+    document.getElementById("score").innerHTML = score;
     document.getElementById('game_border').focus();
 
     if (isCompeting) { 
@@ -417,13 +474,15 @@ function play() {
         document.getElementById("score_header").innerHTML = ``;
     }
     setTimeout(() => {
-        document.getElementById("main_menu").style.visibility = "hidden";
+        document.getElementById("main_menu").style.display = 'none';
+        document.getElementById("scores_menu").style.display = 'none';
         document.getElementById("game_over_menu").style.visibility = "hidden";
         document.getElementById("compete_menu").style.visibility = "hidden";
 
         document.getElementById('play_button').innerHTML = 'New Game';
     }, 180);
     setTimeout(() => {
+        // initial game state
         // activate_test_grid(); display_positions();
         generate_new();
         generate_new();
@@ -435,7 +494,7 @@ function set_username() {
     user = prompt("Please enter your name:","");
     if (user != "" && user != null) {
         setCookie("username", user);
-        update_lists();
+        refresh_lists();
     }
 }
 
@@ -456,6 +515,15 @@ function stopCompeting() {
     isCompeting = false;
 }
 
+function game_over() {
+    animate(document.getElementById("game_over_menu"), 'appear');
+    document.getElementById("game_over_menu").style.visibility = "visible";
+    document.getElementById("game_over_score").innerHTML = score;
+    save_score();
+    stopCompeting();
+}
+
+
 
 
 let ms = 50;
@@ -463,61 +531,45 @@ let isMoving = false;
 let startX = 0;
 let startY = 0;
 let container = document.getElementById('game_border');
-update_lists();
 
+// keyboard events
 container.addEventListener('keydown', async (event) => {
     event.preventDefault();
     if (isMoving) return; 
     
     blockMoved = false;
     isMoving = true;
+    
+    if (event.key == 'ArrowUp' || event.key == 'w') blockMoved = up();
+    else if (event.key == 'ArrowDown' || event.key == 's') blockMoved = down();
+    else if (event.key == 'ArrowLeft' || event.key == 'a') blockMoved = left();
+    else if (event.key == 'ArrowRight' || event.key == 'd') blockMoved = right();
 
-    switch(event.key) {
-        case 'ArrowUp':
-            blockMoved = up();
-            break;
-        case 'ArrowDown':
-            blockMoved = down();
-            break;
-        case 'ArrowLeft':
-            blockMoved = left();
-            break;
-        case 'ArrowRight':
-            blockMoved = right();
-            break;
-        default:
-            break;
-    }
     await sleep(ms);
     if (blockMoved) {
         generate_new();
         if (loseCondition()) {
-            animate(document.getElementById("game_over_menu"), 'appear');
-            document.getElementById("game_over_menu").style.visibility = "visible";
-            document.getElementById("game_over_score").innerHTML = score;
-            save_score();
-            stopCompeting();
+            game_over();
         }
     }
     isMoving = false;
 });
 
+// swipe events
 container.addEventListener('touchstart', function(event) {
-    if (event.touches.length === 1) { // Only handle single touch
+    if (event.touches.length === 1) { // only handles single touch
         startX = event.touches[0].clientX;
         startY = event.touches[0].clientY;
-        startTime = new Date().getTime(); // Record the time when the touch starts
+        startTime = new Date().getTime(); 
     }
 });
-
 container.addEventListener('touchmove', function(event) {
     event.preventDefault();
 });
-
 container.addEventListener('touchend', async function(event) {
-    if (event.changedTouches.length === 1) { // Only handle single touch
+    if (event.changedTouches.length === 1) { 
         if (isMoving) return; 
-        
+
         blockMoved = false;
         isMoving = true;
         let endX = event.changedTouches[0].clientX;
@@ -527,8 +579,8 @@ container.addEventListener('touchend', async function(event) {
         let elapsedTime = new Date().getTime() - startTime;
 
         // Thresholds
-        let threshold = 30; // Minimum distance for a swipe
-        let allowedTime = 1000; // Maximum time for a swipe
+        let threshold = 30; // min distance for a swipe
+        let allowedTime = 1000; // max time for a swipe
 
         if (elapsedTime <= allowedTime) {
             if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) >= threshold) {
@@ -549,10 +601,7 @@ container.addEventListener('touchend', async function(event) {
         if (blockMoved) {
             generate_new();
             if (loseCondition()) {
-                animate(document.getElementById("game_over_menu"), 'appear');
-                document.getElementById("game_over_menu").style.visibility = "visible";
-                document.getElementById("game_over_score").innerHTML = score;
-                stopCompeting();
+                game_over();
             }
         }
         isMoving = false;

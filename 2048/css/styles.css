@@ -1,100 +1,36 @@
 :root {
     --main-width: 400px;
-    --h1-size: 45px;
+    --h1-size: 55px;
     --h2-size: 35px;
     --h3-size: 26px;
     --p-size: 20px;
     --square-font-size: 50px;
      
     --text-color: rgb(108, 99, 91);
-    --title-color: black;
+    --title-color: rgb(233, 136, 101);
 }
 
-/* Mobile screen */
-@media (max-width: 400px) {
-    :root {
-        --main-width: 400px;
-        --h1-size: 45px;
-        --h2-size: 35px;
-        --h3-size: 26px;
-        --p-size: 20px;
-        --square-font-size: 50px;
-
-        --title-color: rgb(237, 96, 136);
-    }
-}
-
-/* 1/4 screen and small mobile screens */
-@media (min-width: 401px) and (max-width: 575px) {
-    :root {
-        --main-width: 400px;
-        --h1-size: 45px;
-        --h2-size: 35px;
-        --h3-size: 26px;
-        --p-size: 20px;
-        --square-font-size: 50px;
-
-        --title-color: blue;
-    }
-}
-
-/* 1/2 window and large mobile screens */
-@media (min-width: 576px) and (max-width: 767px) {
-    :root {
-        --main-width: 400px;
-        --h1-size: 45px;
-        --h2-size: 35px;
-        --h3-size: 26px;
-        --p-size: 20px;
-        --square-font-size: 50px;
-
-        --title-color: purple;
-    }
-}
-
-/* 3/4 window*/
-@media (min-width: 768px) and (max-width: 1199px){
-    :root {
-        --main-width: 400px;
-        --h1-size: 45px;
-        --h2-size: 35px;
-        --h3-size: 26px;
-        --p-size: 20px;
-        --square-font-size: 50px;
-
-        --title-color: green;
-    }
-}
-
-/* Full windows */
-@media (min-width: 1200px) {
-    :root {
-        --main-width: 500px;
-        --h1-size: 45px;
-        --h2-size: 35px;
-        --h3-size: 26px;
-        --p-size: 20px;
-        --square-font-size: 50px;
-        
-        --title-color: red;
-    }
-}
 
 
 .color_codes {
     color: rgb(219, 209, 180);     /*2*/
-    color: rgb(220, 202, 143);     /*4*/
-    color: rgb(232, 180, 112);    /*8*/
-    color: rgb(242, 157, 117); ;     /*16*/
-    color: rgb(244, 147, 175); ;     /*32*/
-    color: rgb(217, 158, 217);     /*64*/
-    color: rgb(174, 152, 236);     /*128*/
-    color: rgb(118, 194, 190);     /*256*/
-    color: rgb(164, 188, 122);     /*512*/
+    color: rgb(220, 201, 137);     /*4*/
+    color: rgb(232, 177, 105);    /*8*/
+    color: rgb(246, 145, 108); ;     /*16*/
+    color: rgb(249, 146, 168); ;     /*32*/
+    color: rgb(212, 152, 227);     /*64*/
+    color: rgb(153, 170, 255);    /*128*/
+    color: rgb(136, 220, 201);     /*256*/
+    color: rgb(172, 220, 116);     /*512*/
     color: rgb(239, 97, 97);     /*1024*/
-    color: red;     /*2048*/
-    color: red;     /*4096*/
-    color: lightgreen;     /*8192*/
+    color: rgb(198, 71, 145);   /*2048*/
+    color: rgb(76, 92, 197);  /*4096*/
+    color: rgb(61, 161, 62);    /*8192*/
+    color: rgb(220, 181, 23); 
+    color: rgb(159, 8, 8); 
+    color: rgb(108, 0, 126);
+
+    color: rgb(243, 235, 211);
 }
 
 h1 {
@@ -110,15 +46,15 @@ h2 {
     font-size: var(--h2-size);
     font-family: Calibri, sans-serif;
     font-weight: bolder;
-    margin-bottom: 10px;
-    margin-top: 0px;
+    margin: 0px;
 }
+
 h3 {
     color: var(--text-color);
     font-size: var(--h3-size);
     font-family: Calibri, sans-serif;
     font-weight: bolder;
-    margin: 2px;
+    margin: 0px;
 }
 
 p {
@@ -134,29 +70,44 @@ button {
     background-color: rgb(236, 230, 208);
     font-size: var(--h3-size);
     border-radius: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding-left: 2.6%;
+    padding-right: 2.6%;
+    margin-top: 1%;
+    margin-bottom: 2%;
     color: var(--text-color);
     font-family: Calibri, sans-serif;
     font-weight: bolder;
+    border: none;
+    box-shadow: 1px 1px 1px 1px rgba(16, 12, 6, 0.2);
+    height: 10%;
 }
 
 button:hover {
-    background-color: rgb(245, 232, 190);   
+    background-color: rgb(225, 219, 198);
 }
 
 button:active {
-    background-color: rgb(232, 180, 112);
+    background-color: rgb(225, 219, 198);
+    transform: translate(0px, 1px);
+    box-shadow: 1px 0px 1px 1px rgba(16, 12, 6, 0.2);
+    
 }
 
-.exitButton {
+.smallButton {
     height: fit-content;
     font-weight: none;
     font-size: var(--p-size);
     margin-top: 0px;
     border: none;
+    box-shadow: 0px 0px 0px 1px rgba(18, 15, 12, 0.15);
+}
+
+#menu_button {
+    margin: 0px;
+}
+
+#scores_button {
+    display: none;
 }
 
 .row {
@@ -168,6 +119,7 @@ button:active {
 .row_split {
     display: flex;
     justify-content: space-between; 
+    align-items: baseline;
 }
 
 .center {
@@ -189,26 +141,29 @@ button:active {
 
 #game_border {
     width: var(--main-width);
-    margin-top: 50px;
+    height: var(--main-width);
     margin:auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
+
 #game_border:focus {
     outline: none;
 }
 
 .section {
     width: var(--main-width);
-    margin-top: 50px;
     margin:auto;
 }
 
 #container_border {
     width: var(--main-width);
-    aspect-ratio: 1 / 1;
+    height: var(--main-width);
+    /* aspect-ratio: 1 / 1; */
     background-color: rgb(161, 145, 128);
     border-radius: 4px;
-    padding-left: 10px;
-    padding-top: 10px;
+    padding-left: 2.6%;
+    padding-top: 2.6%;
     display: flex;
     position: relative;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -216,18 +171,20 @@ button:active {
 
 #container {
     width: var(--main-width);
+    height: var(--main-width);
     top: 2.6%;
     left: 2.6%;
-    aspect-ratio: 1 / 1;
+    /* aspect-ratio: 1 / 1; */
     position: absolute;
     align-self: center;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .square {
     visibility: hidden;
     width: 22%;
-    aspect-ratio: 1 / 1;
+    height: 22%;
+    /* aspect-ratio: 1 / 1; */
     border-radius: 4px;
     position: absolute;
     top: 0%; 
@@ -235,27 +192,35 @@ button:active {
     display: flex;
     justify-content: center;
     align-items: center;
-    color:  rgb(155, 141, 124);
+    background-color: rbg(255, 248, 230);
+    color:  rgb(141, 126, 107);
     font-size: var(--square-font-size);
     font-family: Calibri, sans-serif;
     font-weight: bolder;
 }
 
+.number {
+    pointer-events: none;
+    color: white;
+}
+
 .background_square {
     width: 22%;
-    aspect-ratio: 1 / 1;
+    height: 22%;
+    /* aspect-ratio: 1 / 1; */
     background-color: rgb(179, 162, 144);
     border-radius: 4px;
     position: absolute;
-    top: 0%; 
-    left: 0%;
+    margin: 0px;
+    padding: 0px;
 }
 
 .menu {
+    display: none;
     z-index: 3;
-    background-color: beige;
-    width: 75%;
-    aspect-ratio: 1 / 1;
+    background-color: rgb(243, 236, 215);
+    width: 80%;
+    /* aspect-ratio: 1 / 1; */
     position: relative;
     border-radius: 15px;
     margin: 10% auto;
@@ -268,30 +233,21 @@ button:active {
     visibility: hidden;
     z-index: 4;
     background-color: rgb(234, 226, 195);
-    width: 65%;
-    aspect-ratio: 0;
+    width: 75%;
     position: absolute;
-    left: 15%;
-    top: 10%;
-    border: solid;
+    left: 10%;
+    top: 12%;
+    padding: 2%;
+    border-radius: 15px;
     box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
+    align-items: center;
 }
 
 .score_list {
     /* background-color: beige; */
     border-radius: 15px;
-    padding: 10px;
+    padding: 2%;
     /* box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.5); */
-}
-
-.textbox {
-    /* z-index: 4; */
-    background-color: white;
-    border-radius: 4px;
-    color: var(--text-color);
-    font-size: var(--p-size);
-    font-family: Calibri, sans-serif;
-    width: 80%;
 }
 
 .slide { 
@@ -311,7 +267,40 @@ button:active {
         transform: scale(1);
     }
 }
-
+@keyframes medMergeAnimation {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.2);
+    }
+    60% {
+        transform: scale(1);
+    }
+    80% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+@keyframes largeMergeAnimation {
+    0% {
+        transform: scale(1);
+    }
+    20% {
+        transform: scale(1.2);
+    }
+    40% {
+        transform: scale(1);
+    }
+    70% {
+        transform: scale(1.3);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
 @keyframes appearAnimation {
     0% {
         transform: scale(0.2);
@@ -320,7 +309,6 @@ button:active {
         transform: scale(1);
     }
 }
-
 @keyframes indicateAnimation {
     0% {
         transform: scale(1);
@@ -334,7 +322,6 @@ button:active {
         background-color: black;
     }
 }
-
 @keyframes hideMenuAnimation {
     0% {
         transform: scale(1);
@@ -346,35 +333,77 @@ button:active {
         transform: scale(0);
     }
 }
-
+@keyframes openMenuAnimation {
+    0% {
+        transform: scale(0.9);
+    }
+    70% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
 .hide_menu {
     animation: hideMenuAnimation 0.2s ease-in-out;
+}
+.open_menu {
+    animation: openMenuAnimation 0.15s ease-in-out;
 }
 .appear {
     animation: appearAnimation 0.2s ease-in-out;
 }
-
 .merge {
-    /* z-index: 2; */
+    z-index: 2;
     animation: mergeAnimation 0.2s ease-in-out;
 }
-
+.mergeMed {
+    z-index: 2;
+    animation: medMergeAnimation 0.7s ease-in-out;
+}
+.mergeLarge {
+    z-index: 2;
+    animation: largeMergeAnimation 0.7s ease-in-out;
+}
 .indicate {
     animation: indicateAnimation 0.5s ease-in-out;
 }
 
-.number {
-    pointer-events: none;
-    color: white;
+
+.square_4_digits {
+    color: rgb(243, 235, 211);
+    font-size: 250%;
+}
+
+.square_5_digits {
+    color: rgb(243, 235, 211);
+    font-size: 200%;
 }
 
 
-/* Mobile screen */
-@media (max-width: 400px) {
-    #game_border {
-        margin: 2px;
+/* Full windows */
+@media (min-width: 1200px) {
+}
+/* 1/2 windows */
+@media (min-width: 486px) and (max-width: 1199px) {
+}
+/* 1/4 windows and mobile screens */
+@media  (max-width: 485px) {
+    :root {
+        --main-width: 90vw;
+        --h1-size: 300%;
+        --h2-size: 230%;
+        --h3-size: 180%;
+        --p-size: 150%;
+        --square-font-size: 330%;
+
+        --title-color: rgb(35, 150, 112);
     }
-    .section {
-        margin: 2px;
+    
+    #bottom_lists {
+        display: none;
+    }
+    #scores_button {
+        display: block;
     }
 }

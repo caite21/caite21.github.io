@@ -8,18 +8,30 @@
 </head>
 
 <body>
-<div id="game_border" tabindex="0" >
-    <div >
-        <h1>2048</h1>
+
+<div class="section" style="align-items: baseline;">
+    <div id="title_block" class="row_split">
+        <h1>2048+</h1>
+        <h1 id="score_header">C8</h1>
+    </div>
+    <h1 id="score_header"></h1>
+    <div class="row_split">
+        <div class="row">
+            <h3>Level: 2^</h3>
+            <h3 id="level"></h3>
+        </div>
+        <button id="scores_button" onclick="openScoresMenu()">Scores</button>
     </div>
     <div class="row_split">
-        <div class="row center">
-            <h3 id="score_header"></h3>
-            <h3>Score: </h3>
+        <div class="row">
+            <h3>Score:&nbsp;</h3>
             <h3 id="score">0</h3>
         </div>
         <button id="menu_button" onclick="openMenu()">Menu</button>
     </div>
+</div>
+
+<div id="game_border" tabindex="0" >
 
     <div id="container_border">
         
@@ -132,10 +144,11 @@
             <!-- Menus -->
 
             <!-- Main menu -->
-            <div class="menu center" id="main_menu">
+            <div class="menu center" id="main_menu" style="display: block;">
                 <div class="right">
-                    <button class="exitButton"
-                    onclick="document.getElementById('main_menu').style.visibility = 'hidden';"
+                    <button class="smallButton"
+                    onclick="document.getElementById('main_menu').style.display = 'none';    
+                            document.getElementById('game_border').focus();"
                     >X</button>
                 </div>
                 <div>
@@ -147,17 +160,66 @@
                 <div>
                     <h3>How to play:</h3> 
                     <p>
-                        Merge tiles to gain points. 
-                        Slide them up, down, left, or right using arrow keys or swipe gestures.
+                        Merge tiles with the same number to gain points. 
+                        Slide the tiles using arrow keys or swipe gestures.
                     </p>
                 </div>      
             </div>
 
-            <!-- Compete menu -->
-            <div class="menu sub_menu" id="compete_menu" >
+            <!-- Scores menu -->
+            <div class="menu" id="scores_menu">
                 <div class="right">
-                    <button class="exitButton"
-                    onclick="document.getElementById('compete_menu').style.visibility = 'hidden';"
+                    <button class="smallButton"
+                    onclick="document.getElementById('scores_menu').style.display = 'none';    
+                        document.getElementById('game_border').focus();"
+                    >X</button>
+                </div>
+                <!-- score lists -->
+                <div class="section" id="menu_lists">
+                    <h3 id="demo"></h3>
+
+                    <div class="score_list">
+                        <h3>Today's Leaderboard:</h3>
+                        <div class="row left">
+                            <div class="row">
+                                <p>1.</p>
+                                <p id="leaderboard_3_name">Name</p> 
+                            </div>
+                            <p id="leaderboard_1_score">12345</p> 
+                        </div>
+                        <div class="row left">
+                            <div class="row">
+                                <p>2.</p>
+                                <p id="leaderboard_2_name">Name2</p> 
+                            </div>
+                            <p id="leaderboard_2_score">1234</p> 
+                        </div>
+                    </div>
+
+                    <div class="score_list">
+                        <h3>Your Top Scores: </h3>
+                        <div class="row left">
+                            <p>1.</p>
+                            <p id="top_score_1">12345</p> 
+                        </div>
+                        <div class="row left">
+                            <p>2.</p>
+                            <p id="top_score_2">0</p> 
+                        </div>
+                        <div class="row left">
+                            <p>3.</p>
+                            <p id="top_score_3">0</p> 
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+            <!-- Compete menu -->
+            <div class="sub_menu" id="compete_menu" >
+                <div class="right">
+                    <button class="smallButton"
+                    onclick="document.getElementById('compete_menu').style.visibility = 'hidden';
+                        document.getElementById('game_border').focus();"
                     >X</button>
                 </div>
                 <h3 class="center">Compete</h3>
@@ -165,20 +227,14 @@
                     Your name and score will be publicly displayed on this site. 
                     You can only compete once per day.
                 </p>
-                <div class="row left">
+                <div class="row">
                     <p>Name: </p>
                     <p id="username"></p>
                     <div class="right">
-                        <button id="set_username_button" onclick="set_username()">edit</button>
+                        <button class="smallButton" id="set_username_button" 
+                        onclick="set_username()">✎</button>
                     </div>
                 </div>
-                <!-- <div class="row left">
-                    <p>Name: </p>
-                    <form>
-                        <input class="textbox" type="text" id="username" name="username">
-                    </form>
-                    <br>
-                </div> -->
                 <div class="center">
                     <button id="compete_play_button" onclick="compete_play()">Go</button>
                 </div>
@@ -187,31 +243,32 @@
             
 
             <!-- Game over menu -->
-            <div class="menu sub_menu center" id="game_over_menu">
+            <div class="sub_menu center" id="game_over_menu">
                 <div class="right">
-                    <button class="exitButton"
-                    onclick="document.getElementById('game_over_menu').style.visibility = 'hidden';"
+                    <button class="smallButton"
+                    onclick="document.getElementById('game_over_menu').style.display = 'none';    
+                        document.getElementById('game_border').focus();"
                     >X</button>
                 </div>
-                <h1>Game Over</h1>
+                <h2>Game Over</h2>
                 <div class="row center">
-                    <h2>Score:  </h2>
-                    <h2 id="game_over_score">0</h2>
+                    <h3>Score:&nbsp;</h3>
+                    <h3 id="game_over_score">0</h3>
                 </div>
-                <div>
-                    <button onclick="play()">New Game</button>
-                </div>
+                <br>
+                <button onclick="play()">New Game</button>
             </div> 
+
+
         </div>
     </div>  
 </div>
-     
+
+    
 <br>
-
-<!-- Score lists -->
-<div class="section">
+<!-- Bottom score lists -->
+<div class="section" id="bottom_lists">
     <h3 id="demo"></h3>
-
 
     <div class="score_list">
         <h3>Today's Leaderboard: (WIP)</h3>
@@ -229,9 +286,7 @@
             </div>
             <p id="leaderboard_2_score">1234</p> 
         </div>
-        
     </div>
-    <br>
 
     <div class="score_list">
         <h3>Your Top Scores: </h3>
@@ -247,12 +302,8 @@
             <p>3.</p>
             <p id="top_score_3">0</p> 
         </div>
-        
     </div>
-
 </div>
-<br>
-
 
 <script src="js/script.js"></script>
 </body>
