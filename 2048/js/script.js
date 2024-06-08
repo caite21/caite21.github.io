@@ -29,7 +29,7 @@ const square_colours = {2: "rgb(219, 209, 180)",
 
 // initialize page
 refresh_lists();
-level = getCookie('level') || 0;
+level = getCookie('level') || 1;
 document.getElementById("level").innerHTML = level; 
 document.getElementById("score_header").innerHTML = getCookie('username'); 
 if (level >= 10) document.documentElement.style.setProperty('--title-color', square_colours[2**level]);
@@ -444,7 +444,7 @@ function openCompeteMenu() {
 function play() {
     // reset
     score = 0;
-    level = 0;
+    level = 1;
     square_arr = [];
     inactive_sqrs = [];
     next_location = [];
@@ -484,8 +484,8 @@ function play() {
     }, 180);
     setTimeout(() => {
         // initial game state
-        activate_test_grid(); display_positions();
-        // generate_new(); generate_new();
+        // activate_test_grid(); display_positions();
+        generate_new(); generate_new();
     }, 300);
 
 }
