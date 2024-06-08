@@ -41,52 +41,52 @@
             <div class="background_square" style="top: 0%; left: 0%">
                 <span class="number"></span>
             </div>
-            <div class="background_square" style="top: 0%; left: 25%">
+            <div class="background_square" style="top: 0%; left: 24%">
                 <span class="number"></span>
             </div>
-            <div class="background_square" style="top: 0%; left: 50%">
+            <div class="background_square" style="top: 0%; left: 48%">
                 <span class="number"></span>
             </div>
-            <div class="background_square" style="top: 0%; left: 75%">
-                <span class="number"></span>
-            </div>
-            
-            <div class="background_square" style="top: 25%; left: 0%">
-                <span class="number"></span>
-            </div>
-            <div class="background_square" style="top: 25%; left: 25%">
-                <span class="number"></span>
-            </div>
-            <div class="background_square" style="top: 25%; left: 50%">
-                <span class="number"></span>
-            </div>
-            <div class="background_square" style="top: 25%; left: 75%">
+            <div class="background_square" style="top: 0%; left: 72%">
                 <span class="number"></span>
             </div>
             
-            <div class="background_square" style="top: 50%; left: 0%">
+            <div class="background_square" style="top: 24%; left: 0%">
                 <span class="number"></span>
             </div>
-            <div class="background_square" style="top: 50%; left: 25%">
+            <div class="background_square" style="top: 24%; left: 24%">
                 <span class="number"></span>
             </div>
-            <div class="background_square" style="top: 50%; left: 50%">
+            <div class="background_square" style="top: 24%; left: 48%">
                 <span class="number"></span>
             </div>
-            <div class="background_square" style="top: 50%; left: 75%">
+            <div class="background_square" style="top: 24%; left: 72%">
+                <span class="number"></span>
+            </div>
+            
+            <div class="background_square" style="top: 48%; left: 0%">
+                <span class="number"></span>
+            </div>
+            <div class="background_square" style="top: 48%; left: 24%">
+                <span class="number"></span>
+            </div>
+            <div class="background_square" style="top: 48%; left: 48%">
+                <span class="number"></span>
+            </div>
+            <div class="background_square" style="top: 48%; left: 72%">
                 <span class="number"></span>
             </div>
 
-            <div class="background_square" style="top: 75%; left: 0%">
+            <div class="background_square" style="top: 72%; left: 0%">
                 <span class="number"></span>
             </div>
-            <div class="background_square" style="top: 75%; left: 25%">
+            <div class="background_square" style="top: 72%; left: 24%">
                 <span class="number"></span>
             </div>
-            <div class="background_square" style="top: 75%; left: 50%">
+            <div class="background_square" style="top: 72%; left: 48%">
                 <span class="number"></span>
             </div>
-            <div class="background_square" style="top: 75%; left: 75%">
+            <div class="background_square" style="top: 72%; left: 72%">
                 <span class="number"></span>
             </div>
 
@@ -154,9 +154,9 @@
                 <div>
                     <button id="play_button" onclick="play()">Play</button>
                 </div>
-                <div>
+                <!-- <div>
                     <button id="compete_button" onclick="openCompeteMenu()">Compete</button>
-                </div>
+                </div> -->
                 <div>
                     <h3>How to play:</h3> 
                     <p>
@@ -177,37 +177,26 @@
                 <!-- score lists -->
                 <div class="section" id="menu_lists">
                     <h3 id="demo"></h3>
-
+<!-- 
                     <div class="score_list">
-                        <h3>Today's Leaderboard:</h3>
-                        <div class="row left">
-                            <div class="row">
-                                <p>1.</p>
-                                <p id="leaderboard_3_name">Name</p> 
-                            </div>
-                            <p id="leaderboard_1_score">12345</p> 
+                        <h3>Today's Leaderboard: (WIP)</h3>
+                        <div id="leaderboardList">
+                
                         </div>
-                        <div class="row left">
-                            <div class="row">
-                                <p>2.</p>
-                                <p id="leaderboard_2_name">Name2</p> 
-                            </div>
-                            <p id="leaderboard_2_score">1234</p> 
-                        </div>
-                    </div>
+                    </div> -->
 
                     <div class="score_list">
                         <h3>Your Top Scores: </h3>
                         <div class="row left">
-                            <p>1.</p>
+                            <p>1.&nbsp;</p>
                             <p id="top_score_1">12345</p> 
                         </div>
                         <div class="row left">
-                            <p>2.</p>
+                            <p>2.&nbsp;</p>
                             <p id="top_score_2">0</p> 
                         </div>
                         <div class="row left">
-                            <p>3.</p>
+                            <p>3.&nbsp;</p>
                             <p id="top_score_3">0</p> 
                         </div>
                     </div>
@@ -264,46 +253,39 @@
     </div>  
 </div>
 
-    
-<br>
+
 <!-- Bottom score lists -->
 <div class="section" id="bottom_lists">
     <h3 id="demo"></h3>
 
-    <div class="score_list">
+    <!-- <div class="score_list">
         <h3>Today's Leaderboard: (WIP)</h3>
-        <div class="row_split">
-            <div class="row">
-                <p>1.</p>
-                <p id="leaderboard_3_name">Name</p> 
-            </div>
-            <p id="leaderboard_1_score">12345</p> 
+        <div id="leaderboardList">
+
         </div>
-        <div class="row_split">
-            <div class="row">
-                <p>2.</p>
-                <p id="leaderboard_2_name">Name2</p> 
-            </div>
-            <p id="leaderboard_2_score">1234</p> 
-        </div>
-    </div>
+    </div> -->
 
     <div class="score_list">
         <h3>Your Top Scores: </h3>
         <div class="row left">
-            <p>1.</p>
+            <p>1.&nbsp;</p>
             <p id="top_score_1">12345</p> 
         </div>
         <div class="row left">
-            <p>2.</p>
+            <p>2.&nbsp;</p>
             <p id="top_score_2">0</p> 
         </div>
         <div class="row left">
-            <p>3.</p>
+            <p>3.&nbsp;</p>
             <p id="top_score_3">0</p> 
         </div>
     </div>
 </div>
+
+<!-- <div class="section">
+    <button id="demo_button" onclick="addLeaderboardRow()">Add score</button>
+
+</div> -->
 
 <script src="js/script.js"></script>
 </body>

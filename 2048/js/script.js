@@ -3,7 +3,7 @@ let isCompeting = false;
 let score = 0;
 let level = 0;
 const board_len = 4;
-const step = 25;
+const step = 24;
 let square_arr = [];
 let inactive_sqrs = [];
 let next_location = [];
@@ -11,21 +11,22 @@ const square_elements  = Array.from(document.getElementsByClassName('square'));
 const square_colours = {2: "rgb(219, 209, 180)", 
                         4: "rgb(220, 202, 143)", 
                         8: "rgb(232, 177, 105)",  
-                        16: "rgb(246, 145, 108)", 
-                        32: "rgb(249, 146, 168)", 
-                        64: "rgb(212, 152, 227)",
-                        128: "rgb(153, 170, 255)", 
-                        256: "rgb(136, 220, 201)", 
-                        512: "rgb(172, 220, 116)", 
-                        1024: "rgb(239, 97, 97)",
-                        2048: "rgb(198, 71, 145)",
-                        4096: "rgb(76, 92, 197)",
-                        8192: "rgb(61, 161, 62)",
-                        16384: "rgb(159, 8, 8)",
-                        32768: "rgb(220, 181, 23)",
-                        65536: "rgb(108, 0, 126)",
+                        16: "rgb(236, 158, 129)",
+                        32: "rgb(239, 156, 174)",
+                        64: "rgb(212, 166, 223)",
+                        128: "rgb(186, 198, 255)", 
+                        256:  "rgb(165, 224, 210)",
+                        512:  "rgb(184, 219, 143)", 
+                        1024: "rgb(237, 126, 126)", 
+                        2048: "rgb(198, 103, 159)", 
+                        4096: "rgb(106, 117, 188)",  
+                        8192: "rgb(92, 172, 94)",
+                        16384: "rgb(216, 185, 60)", 
+                        32768: "rgb(160, 37, 37)",
+                        65536: "rgb(112, 24, 127)",
                         'white':  "rgb(243, 235, 211)"  
                         };
+
 // initialize page
 refresh_lists();
 level = getCookie('level') || 0;
@@ -483,9 +484,8 @@ function play() {
     }, 180);
     setTimeout(() => {
         // initial game state
-        // activate_test_grid(); display_positions();
-        generate_new();
-        generate_new();
+        activate_test_grid(); display_positions();
+        // generate_new(); generate_new();
     }, 300);
 
 }
@@ -523,6 +523,37 @@ function game_over() {
     stopCompeting();
 }
 
+function get_leaderboard() {
+
+}
+
+function save_leaderboard_score() {
+
+}
+
+function check_if_username_valid() {
+    // can't already exist in db
+    // can't be too long
+}
+
+function addLeaderboardRow() {
+    const list = document.getElementById('leaderboardList');
+    // const position = document.createElement('p');
+    const name = document.createElement('p');
+    const score = document.createElement('p');
+    const level = document.createElement('p');
+
+    // position.textContent = 1 + '. ';
+    name.textContent = 1 + '. ' + 'Name';
+    score.textContent = 1234;
+    level.textContent = 'lev. ' + 10;
+    
+    // Append the new list item to the list
+    // list.appendChild(position);
+    list.appendChild(name);
+    list.appendChild(score);
+    list.appendChild(level);
+}
 
 
 
@@ -579,8 +610,8 @@ container.addEventListener('touchend', async function(event) {
         let elapsedTime = new Date().getTime() - startTime;
 
         // Thresholds
-        let threshold = 30; // min distance for a swipe
-        let allowedTime = 1000; // max time for a swipe
+        let threshold = 50; // min distance for a swipe
+        let allowedTime = 500; // max time for a swipe
 
         if (elapsedTime <= allowedTime) {
             if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) >= threshold) {
