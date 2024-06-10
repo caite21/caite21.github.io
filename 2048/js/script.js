@@ -1,7 +1,8 @@
 // globals
 let isCompeting = false;
+let isPuzzle = false;
 let score = 0;
-let level = 0;
+let level = 1;
 const board_len = 4;
 const step = 24;
 let square_arr = [];
@@ -9,7 +10,7 @@ let inactive_sqrs = [];
 let next_location = [];
 const square_elements  = Array.from(document.getElementsByClassName('square'));
 const square_colours = {2: "rgb(219, 209, 180)", 
-                        4: "rgb(220, 202, 143)", 
+                        4: "rgb(214, 197, 140)", 
                         8: "rgb(232, 177, 105)",  
                         16: "rgb(236, 158, 129)",
                         32: "rgb(239, 156, 174)",
@@ -28,14 +29,16 @@ const square_colours = {2: "rgb(219, 209, 180)",
                         };
 
 // initialize page
-refresh_lists();
-level = getCookie('level') || 1;
-document.getElementById("level").innerHTML = level; 
-document.getElementById("score_header").innerHTML = getCookie('username'); 
-if (level >= 10) document.documentElement.style.setProperty('--title-color', square_colours[2**level]);
+refreshLists();
+// level = getCookie('level') || 1;
+// document.getElementById("level").innerHTML = level; 
+// document.getElementById("score_header").innerHTML = getCookie('username'); 
+// change title color to level color
+// if (level >= 10) document.documentElement.style.setProperty('--title-color', square_colours[2**level]);
+// don't let user exit menu at first
+document.getElementById("main_menu_close_button").style.visibility = "hidden";
 
-
-function activate_test_grid() {
+function activateTestGrid() {
     let value_arr =[[2, 2, 4, 8],
                     [16, 32, 64, 128],
                     [256, 512, 1024, 2048],
@@ -48,9 +51,6 @@ function activate_test_grid() {
             }
         }
     }
-}
-
-function display_positions() {
     for (let row = 0; row < board_len; row++) {
         for (let col = 0; col < board_len; col++) {
             let sqr = square_arr[row][col];
@@ -63,6 +63,7 @@ function display_positions() {
         }
     }
 }
+
 
 function animate(elem, CSS_class_name) {
     // clear all animations
@@ -78,7 +79,7 @@ function animate(elem, CSS_class_name) {
     elem.classList.add(CSS_class_name);
 }
 
-function adjust_large_sqr(sqr) {
+function adjustLargeSquare(sqr) {
     if (sqr.value < 1000) return;
 
     if (sqr.value >= 10000) {
@@ -99,7 +100,7 @@ function activate(row, col, value) {
     sqr.elem.style.left = `${col * step}%`;
     sqr.elem.style.backgroundColor =  square_colours[value];
     sqr.elem.innerHTML = `${value}`;
-    adjust_large_sqr(sqr);
+    adjustLargeSquare(sqr);
     sqr.elem.style.visibility = 'visible';
     animate(sqr.elem, 'appear'); 
 }
@@ -112,7 +113,7 @@ function deactivate(sqr) {
     sqr.elem.style.visibility = 'hidden';
 }
 
-function display_move() {
+function displayMove() {
     while (next_location.length > 0) {
         let l  = next_location.pop();
         let sqr = l[0];
@@ -124,7 +125,7 @@ function display_move() {
         sqr.elem.style.top = `${y * step}%`;
         sqr.elem.style.backgroundColor =  square_colours[sqr.value];
         sqr.elem.innerHTML = `${sqr.value}`;
-        adjust_large_sqr(sqr);
+        adjustLargeSquare(sqr);
 
         if (!sqr.active) {
             deactivate(sqr);
@@ -137,7 +138,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function update_level() {
+function updateLevel() {
     level++;
     setCookie('level', level);
     document.getElementById("level").innerHTML = level; 
@@ -159,7 +160,7 @@ function merge(sqr1, sqr2) {
 
     score += sqr1.value;
     if (sqr1.value > 2**level) {
-        update_level();
+        updateLevel();
     }
 }
 
@@ -197,7 +198,7 @@ function up() {
             }
         }
     }
-    display_move();
+    displayMove();
     return movement;
 }
 
@@ -235,7 +236,7 @@ function down() {
             }
         }
     }
-    display_move();
+    displayMove();
     return movement;
 }
 
@@ -273,7 +274,7 @@ function left() {
             }
         }
     }
-    display_move();
+    displayMove();
     return movement;
 }
 
@@ -311,11 +312,11 @@ function right() {
             }
         }
     }
-    display_move();
+    displayMove();
     return movement;
 }
 
-function generate_new() {
+function generateNewSquare() {
     // number of inactive squares to choose from
     let rand_index = Math.floor(Math.random() * inactive_sqrs.length);
     let count  = 0;
@@ -335,7 +336,36 @@ function generate_new() {
     }
 }
 
-function loseCondition() {
+function generateNewMedSquare() {
+    // number of inactive squares to choose from
+    let rand_index = Math.floor(Math.random() * inactive_sqrs.length);
+    let count  = 0;
+    for (let row = 0; row < board_len; row++) {
+        for (let col = 0; col < board_len; col++) {
+            if (square_arr[row][col] == null) {
+                if (count == rand_index) {
+                    // value could be in range 8 to 1024 
+                    let value = 0;
+                    let rand_value = Math.random();
+                    if (rand_value < 0.2) value = 8;
+                    else if (rand_value < 0.3) value = 16;
+                    else if (rand_value < 0.4) value = 32;
+                    else if (rand_value < 0.5) value = 64;
+                    else if (rand_value < 0.6) value = 128;
+                    else if (rand_value < 0.8) value = 256;
+                    else if (rand_value < 1) value = 512;
+
+                    activate(row, col, value);
+                    return;
+                }
+                count++;
+            }
+        }
+    }
+}
+
+
+function isGameOver() {
     if (inactive_sqrs.length == 0) {
         // check if move is possible
 
@@ -399,7 +429,7 @@ function getCookie(cname) {
     return "";
 }
 
-function refresh_lists() {
+function refreshLists() {
     document.getElementById('top_score_1').innerHTML = getCookie('top_score_1');    
     document.getElementById('top_score_2').innerHTML = getCookie('top_score_2');
     document.getElementById('top_score_3').innerHTML = getCookie('top_score_3');
@@ -407,7 +437,7 @@ function refresh_lists() {
     document.getElementById('demo').innerHTML = getCookie('username');
 }
 
-function save_score() {
+function saveScore() {
     if (isCompeting) {
 
     }
@@ -426,7 +456,7 @@ function save_score() {
     } else if (score > score3) {
         setCookie('top_score_3', score);
     } 
-    refresh_lists();
+    refreshLists();
 }
    
 
@@ -434,7 +464,7 @@ function openCompeteMenu() {
     document.getElementById('compete_menu').style.visibility = 'visible';
     let username = getCookie("username");
     if (username == "") {
-        set_username();
+        setUsername();
         username = getCookie("username");
     }
     document.getElementById("username").innerHTML = username;
@@ -466,40 +496,76 @@ function play() {
     animate( document.getElementById("game_over_menu"), 'hide_menu');
     animate( document.getElementById("compete_menu"), 'hide_menu');
 
+    document.getElementById("score_header").innerHTML = ``;
     document.getElementById("score").innerHTML = score;
     document.getElementById('game_border').focus();
 
     if (isCompeting) { 
-
+        document.getElementById("score_header").innerHTML = "Competing";
     } else {
         document.getElementById("score_header").innerHTML = ``;
     }
+
     setTimeout(() => {
         document.getElementById("main_menu").style.display = 'none';
         document.getElementById("scores_menu").style.display = 'none';
         document.getElementById("game_over_menu").style.visibility = "hidden";
         document.getElementById("compete_menu").style.visibility = "hidden";
+        
+        // allow user to close main menu now that a first game has been started
+        document.getElementById("main_menu_close_button").style.visibility = "visible";
 
-        document.getElementById('play_button').innerHTML = 'New Game';
+        document.getElementById('menu_title').innerHTML = 'New Game:';
+        
     }, 180);
     setTimeout(() => {
         // initial game state
-        // activate_test_grid(); display_positions();
-        generate_new(); generate_new();
+        if (isCompeting) {
+            generateNewSquare(); generateNewSquare();
+        }
+        else if (isPuzzle) {
+            generateNewSquare();
+            generateNewSquare();
+            generateNewSquare();
+            generateNewSquare();
+            generateNewSquare();
+
+            generateNewMedSquare();
+            generateNewMedSquare();
+            generateNewMedSquare();
+            generateNewMedSquare();
+            generateNewMedSquare();
+            generateNewMedSquare();
+            generateNewMedSquare();
+            generateNewMedSquare();
+        }
+        else {
+            // activateTestGrid();
+            generateNewSquare(); generateNewSquare();
+        }
+
+        
     }, 300);
 
 }
 
-function set_username() {
+function setUsername() {
     user = prompt("Please enter your name:","");
     if (user != "" && user != null) {
         setCookie("username", user);
-        refresh_lists();
+        refreshLists();
     }
 }
 
-function compete_play() {
+function normalPlay() {
+    isCompeting = false;
+    isPuzzle = false;
+    play();
+}
+
+function competePlay() {
     let username = document.getElementById("username").innerHTML; 
+    // username = "test user";
     if (username != "") {
         document.getElementById("score_header").innerHTML = `${username}'s `;
         isCompeting = true;
@@ -510,28 +576,36 @@ function compete_play() {
     }
 }
 
+function puzzlePlay() {
+    isCompeting = false;
+    isPuzzle = true;
+    play();
+}
+
 function stopCompeting() {
     document.getElementById("score_header").innerHTML = ``;
     isCompeting = false;
 }
 
-function game_over() {
+function gameOver() {
     animate(document.getElementById("game_over_menu"), 'appear');
     document.getElementById("game_over_menu").style.visibility = "visible";
     document.getElementById("game_over_score").innerHTML = score;
-    save_score();
+    if (!isCompeting && !isPuzzle) {
+        saveScore();
+    }
     stopCompeting();
 }
 
-function get_leaderboard() {
+function getLeaderboard() {
 
 }
 
-function save_leaderboard_score() {
+function saveLeaderboardScore() {
 
 }
 
-function check_if_username_valid() {
+function isUsernameValid() {
     // can't already exist in db
     // can't be too long
 }
@@ -557,10 +631,10 @@ function addLeaderboardRow() {
 
 
 
-let ms = 50;
-let isMoving = false;
 let startX = 0;
 let startY = 0;
+let ms = 50;
+let isMoving = false;
 let container = document.getElementById('game_border');
 
 // keyboard events
@@ -578,9 +652,9 @@ container.addEventListener('keydown', async (event) => {
 
     await sleep(ms);
     if (blockMoved) {
-        generate_new();
-        if (loseCondition()) {
-            game_over();
+        generateNewSquare();
+        if (isGameOver()) {
+            gameOver();
         }
     }
     isMoving = false;
@@ -588,53 +662,34 @@ container.addEventListener('keydown', async (event) => {
 
 // swipe events
 container.addEventListener('touchstart', function(event) {
-    if (event.touches.length === 1) { // only handles single touch
-        startX = event.touches[0].clientX;
-        startY = event.touches[0].clientY;
-        startTime = new Date().getTime(); 
-    }
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
 });
-container.addEventListener('touchmove', function(event) {
+container.addEventListener('touchmove', async function(event) {
     event.preventDefault();
-});
-container.addEventListener('touchend', async function(event) {
-    if (event.changedTouches.length === 1) { 
-        if (isMoving) return; 
+    if (isMoving) return; 
 
-        blockMoved = false;
-        isMoving = true;
-        let endX = event.changedTouches[0].clientX;
-        let endY = event.changedTouches[0].clientY;
-        let deltaX = endX - startX;
-        let deltaY = endY - startY;
-        let elapsedTime = new Date().getTime() - startTime;
+    blockMoved = false;
+    isMoving = true;
+    let endX = event.touches[0].clientX;
+    let endY = event.touches[0].clientY;
+    let deltaX = endX - startX;
+    let deltaY = endY - startY;
 
-        // Thresholds
-        let threshold = 50; // min distance for a swipe
-        let allowedTime = 500; // max time for a swipe
-
-        if (elapsedTime <= allowedTime) {
-            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) >= threshold) {
-                if (deltaX > 0) {
-                    blockMoved = right();
-                } else {
-                    blockMoved = left();
-                }
-            } else if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) >= threshold) {
-                if (deltaY > 0) {
-                    blockMoved = down();
-                } else {
-                    blockMoved = up();
-                }
-            }
-        }
-        await sleep(ms);
-        if (blockMoved) {
-            generate_new();
-            if (loseCondition()) {
-                game_over();
-            }
-        }
-        isMoving = false;
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX > 0) blockMoved = right();
+        else blockMoved = left();
+    } else if (Math.abs(deltaY) > Math.abs(deltaX)) {
+        if (deltaY > 0) blockMoved = down();
+        else blockMoved = up();
     }
+    await sleep(ms);
+    if (blockMoved) {
+        generateNewSquare();
+        if (isGameOver()) gameOver();
+    }
+    
+});
+container.addEventListener('touchend', function(event) {
+    isMoving = false;
 });

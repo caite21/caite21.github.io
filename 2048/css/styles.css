@@ -14,7 +14,7 @@
 
 .color_codes {
     color: rgb(219, 209, 180);     /*2*/
-    color: rgb(220, 201, 137);     /*4*/
+    color: rgb(214, 197, 140);     /*4*/
     color: rgb(232, 177, 105);    /*8*/
     color: rgb(236, 158, 129); ;     /*16*/
     color: rgb(239, 156, 174); ;     /*32*/
@@ -69,11 +69,14 @@ p {
 
 
 button {
-    background-color: rgb(236, 230, 208);
-    font-size: var(--h3-size);
+    background-color: rgb(226, 221, 200);
+    font-size: var(--h2-size);
     border-radius: 5px;
     margin-top: 1%;
     margin-bottom: 2%;
+    margin-left: 2%;
+    padding-left: 3%;
+    padding-right: 3%;
     color: var(--text-color);
     font-family: Calibri, sans-serif;
     font-weight: bolder;
@@ -83,11 +86,11 @@ button {
 }
 
 button:hover {
-    background-color: rgb(225, 219, 198);
+    background-color: rgb(216, 206, 181);
 }
 
 button:active {
-    background-color: rgb(225, 219, 198);
+    background-color: rgb(203, 192, 163);
     transform: translate(0px, 1px);
     box-shadow: 1px 0px 1px 1px rgba(16, 12, 6, 0.2);
     
@@ -396,13 +399,10 @@ button:active {
     :root {
         --main-width: 90vw;
         --h1-size: 12vw;
-        --h2-size: 9vw;
+        --h2-size: 8vw;
         --h3-size: 7vw;
         --p-size: 5vw;
-        --square-font-size: 12vw;
-
-        /* todo remove: */
-        --title-color: rgb(35, 150, 112);
+        --square-font-size: 11vw;
     }
 
     #button {

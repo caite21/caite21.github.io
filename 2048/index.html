@@ -12,13 +12,13 @@
 <div class="section" style="align-items: baseline;">
     <div id="title_block" class="row_split">
         <h1>2048+</h1>
-        <h1 id="score_header">C8</h1>
+        <h3 id="score_header"></h3>
     </div>
     <h1 id="score_header"></h1>
     <div class="row_split">
         <div class="row">
             <h3>Level: 2^</h3>
-            <h3 id="level"></h3>
+            <h3 id="level">1</h3>
         </div>
         <button id="scores_button" onclick="openScoresMenu()">Scores</button>
     </div>
@@ -146,22 +146,27 @@
             <!-- Main menu -->
             <div class="menu center" id="main_menu" style="display: block;">
                 <div class="right">
-                    <button class="smallButton"
+                    <button id="main_menu_close_button" class="smallButton"
                     onclick="document.getElementById('main_menu').style.display = 'none';    
                             document.getElementById('game_border').focus();"
                     >X</button>
                 </div>
+                <h3 id="menu_title"></h3>
                 <div>
-                    <button id="play_button" onclick="play()">Play</button>
+                    <button id="play_button" onclick="normalPlay()">Play</button>
                 </div>
-                <!-- <div>
-                    <button id="compete_button" onclick="openCompeteMenu()">Compete</button>
-                </div> -->
                 <div>
+                    <button onclick="puzzlePlay()">Puzzle</button>
+                    <button id="compete_button" onclick="openCompeteMenu()">Compete</button>
+                
+                </div>
+                <div></div>
+                <div>
+                    <p>&nbsp;</p>
                     <h3>How to play:</h3> 
                     <p>
-                        Merge tiles with the same number to gain points. 
-                        Slide the tiles using arrow keys or swipe gestures.
+                        Merge tiles of the same number to create bigger tiles and gain points. 
+                        Slide the tiles up, down, left, or right using arrow keys or swipe gestures.
                     </p>
                 </div>      
             </div>
@@ -176,7 +181,6 @@
                 </div>
                 <!-- score lists -->
                 <div class="section" id="menu_lists">
-                    <h3 id="demo"></h3>
 <!-- 
                     <div class="score_list">
                         <h3>Today's Leaderboard: (WIP)</h3>
@@ -186,6 +190,7 @@
                     </div> -->
 
                     <div class="score_list">
+                        <h3 id="demo"></h3>
                         <h3>Your Top Scores: </h3>
                         <div class="row left">
                             <p>1.&nbsp;</p>
@@ -212,20 +217,21 @@
                     >X</button>
                 </div>
                 <h3 class="center">Compete</h3>
-                <p>
-                    Your name and score will be publicly displayed on this site. 
-                    You can only compete once per day.
+                <p class="center">
+                    Compete for the highest score in today's 2048 puzzle.                </p>
+                <p class="center">
+                    Your name and score will be displayed publicly. You only get one shot to compete each day.
                 </p>
                 <div class="row">
-                    <p>Name: </p>
+                    <p>Name:&nbsp;</p>
                     <p id="username"></p>
                     <div class="right">
                         <button class="smallButton" id="set_username_button" 
-                        onclick="set_username()">✎</button>
+                        onclick="setUsername()">✎</button>
                     </div>
                 </div>
                 <div class="center">
-                    <button id="compete_play_button" onclick="compete_play()">Go</button>
+                    <button id="compete_play_button" onclick="competePlay()">Go</button>
                 </div>
                 
             </div>
@@ -245,7 +251,8 @@
                     <h3 id="game_over_score">0</h3>
                 </div>
                 <br>
-                <button onclick="play()">New Game</button>
+                <button onclick="normalPlay()">New Game</button>
+                <button onclick="puzzlePlay()">New Puzzle</button>
             </div> 
 
 
@@ -256,7 +263,6 @@
 
 <!-- Bottom score lists -->
 <div class="section" id="bottom_lists">
-    <h3 id="demo"></h3>
 
     <!-- <div class="score_list">
         <h3>Today's Leaderboard: (WIP)</h3>
@@ -266,6 +272,7 @@
     </div> -->
 
     <div class="score_list">
+        <h3 id="demo"></h3>
         <h3>Your Top Scores: </h3>
         <div class="row left">
             <p>1.&nbsp;</p>
@@ -279,6 +286,7 @@
             <p>3.&nbsp;</p>
             <p id="top_score_3">0</p> 
         </div>
+
     </div>
 </div>
 
