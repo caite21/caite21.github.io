@@ -9,24 +9,25 @@ let square_arr = [];
 let inactive_sqrs = [];
 let next_location = [];
 const square_elements  = Array.from(document.getElementsByClassName('square'));
-const square_colours = {2: "rgb(219, 209, 180)", 
-                        4: "rgb(214, 197, 140)", 
-                        8: "rgb(232, 177, 105)",  
-                        16: "rgb(236, 158, 129)",
-                        32: "rgb(239, 156, 174)",
-                        64: "rgb(212, 166, 223)",
-                        128: "rgb(186, 198, 255)", 
-                        256:  "rgb(165, 224, 210)",
-                        512:  "rgb(184, 219, 143)", 
-                        1024: "rgb(237, 126, 126)", 
-                        2048: "rgb(198, 103, 159)", 
-                        4096: "rgb(106, 117, 188)",  
-                        8192: "rgb(92, 172, 94)",
-                        16384: "rgb(216, 185, 60)", 
-                        32768: "rgb(160, 37, 37)",
-                        65536: "rgb(112, 24, 127)",
-                        'white':  "rgb(243, 235, 211)"  
-                        };
+const square_colours = 
+    {2: "rgb(219, 209, 180)", 
+    4: "#FFE785", 
+    8: "#FFB954",  
+    16: "#FF9B56",
+    32: "#88C957",
+    64: "#89DCCC",
+    128: "#00ABD5", 
+    256:  "#0055A4",
+    512:  "#9658AA", 
+    1024: "#2C8B2C", 
+    2048: "#CE4138", 
+    4096: "#DDB213",  
+    8192: "#FD8300",
+    16384: "#870044", 
+    32768: "#002E60",
+    65536: "black",
+    'white':  "rgb(243, 235, 211)"  
+    };
 
 // initialize page
 refreshLists();
@@ -80,13 +81,16 @@ function animate(elem, CSS_class_name) {
 }
 
 function adjustLargeSquare(sqr) {
-    if (sqr.value < 1000) return;
+    if (sqr.value < 100) return;
 
     if (sqr.value >= 10000) {
         sqr.elem.classList.add('square_5_digits');
     }
     else if (sqr.value >= 1000) {
         sqr.elem.classList.add('square_4_digits');
+    }    
+    else if (sqr.value >= 100) {
+        sqr.elem.classList.add('square_3_digits');
     }
 }
 
@@ -689,7 +693,7 @@ container.addEventListener('touchmove', async function(event) {
         if (isGameOver()) gameOver();
     }
     
-});
+}, { passive: false });
 container.addEventListener('touchend', function(event) {
     isMoving = false;
 });

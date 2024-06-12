@@ -4,7 +4,7 @@
     --h2-size: 35px;
     --h3-size: 26px;
     --p-size: 20px;
-    --square-font-size: 50px;
+    --square-font-size: 48px;
      
     --text-color: rgb(108, 99, 91);
     --title-color: rgb(233, 136, 101);
@@ -29,6 +29,7 @@
     color: rgb(216, 185, 60); 
     color: rgb(160, 37, 37); 
     color: rgb(112, 24, 127);
+
 
     color: rgb(243, 235, 211);
 }
@@ -214,7 +215,7 @@ button:active {
 .menu {
     display: none;
     z-index: 3;
-    background-color: rgb(243, 236, 215);
+    background-color: #f3eddc;
     width: 80%;
     position: relative;
     left: 5%;
@@ -229,7 +230,7 @@ button:active {
 .sub_menu {
     visibility: hidden;
     z-index: 4;
-    background-color: rgb(234, 226, 195);
+    background-color: #eae4d4;
     width: 70%;
     position: absolute;
     left: 10%;
@@ -375,15 +376,18 @@ button:active {
     animation: indicateAnimation 0.5s ease-in-out;
 }
 
-
+.square_3_digits {
+    color: rgb(243, 235, 211);
+    font-size: 42px;
+}
 .square_4_digits {
     color: rgb(243, 235, 211);
-    font-size: 250%;
+    font-size: 36px;
 }
 
 .square_5_digits {
     color: rgb(243, 235, 211);
-    font-size: 200%;
+    font-size: 28px;
 }
 
 
@@ -402,7 +406,7 @@ button:active {
         --h2-size: 8vw;
         --h3-size: 7vw;
         --p-size: 5vw;
-        --square-font-size: 11vw;
+        --square-font-size: 10vw;
     }
 
     #button {
@@ -416,12 +420,16 @@ button:active {
     #scores_button {
         display: block;
     }
-    .square_4_digits {
+    .square_3_digits {
         color: rgb(243, 235, 211);
         font-size: 9vw;
     }
+    .square_4_digits {
+        color: rgb(243, 235, 211);
+        font-size: 8vw;
+    }
     .square_5_digits {
         color: rgb(243, 235, 211);
-        font-size: 7vw;
+        font-size: 6.5vw;
     }
 }
