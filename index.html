@@ -28,13 +28,29 @@
                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">GitHub</a>
+                    <a class="nav-link" href="https://github.com/caite21">GitHub</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="test.html">Projects</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Projects
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="2048">2048+</a>
+                        <!-- <a class="dropdown-item" href="repo2">Project 2</a> -->
+                        <!-- <a class="dropdown-item" href="repo3">Project 3</a> -->
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact me</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Contact me
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" onclick="
+                            navigator.clipboard.writeText('clsklar@ualberta.ca');
+                            alert('Copied to clipboard: clsklar@ualberta.ca');" 
+                            href="mailto:clsklar@ualberta.ca">Email: clsklar@ualberta.ca</a>
+                        <a class="dropdown-item" href="https://ca.linkedin.com/in/caite21">LinkedIn</a>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -45,7 +61,7 @@
         <div class="container">
             <br><!-- so that the text doesn't touch the navbar when minimized -->
             <h1 class="display-3">Welcome, I'm Caite</h1>
-            <h3  class="font-weight-light">This is my personal website that is currently under construction.</h3>
+            <h3  class="font-weight-light">My personal website is currently under construction.</h3>
             
         </div>
     </div>

@@ -1,12 +1,187 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
+<style>
+	:root {
+		--bodyText: #262626;
+		--headerText: #262626;
+		--titleText: #262626;
+		--whiteSpace: black;
+		--hoverText: black; 
+		--bodyFont: sans-serif;
+		--titleFont: sans-serif;
+	}
+
+	h1 {
+		
+		font-family: var(--titleFont);
+		color: var(--titleText);
+	}
+	h2 {
+		font-family: var(--titleFont);
+		color: var(--titleText);
+	}
+	h3 {
+		font-family: var(--titleFont);
+		color: var(--headerText);
+		font-size: 22px;
+	}
+
+	.basic {
+		color: var(--bodyText);
+		font-family: var(--bodyFont);
+		background: transparent;
+		border-width: 0px;
+		font-size: 14px;
+
+	}
+
+	.website-background {
+		/*images: beige_flowers, rainbow_glass, green_edges, moss_wall, adobe_gen_city_wide*/
+		background-image: url('https://raw.githubusercontent.com/caite21/caite21.github.io/main/img/beige_flowers.png');
+		background-size: fill;
+		color: var(--bodyText);
+		background-position: top;
+		background-repeat: no-repeat;
+	}
+
+	.navbar {
+		color: var(--bodyText);
+		font-family: var(--bodyFont);
+		/*background-color: rgba(255, 255, 255, 0.1); */
+		backdrop-filter: blur(10px); /*  blur effect */
+		/*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+		border-radius: 10px;
+		size: 20px;
+
+
+
+	}
+	.navbar:active {color:  var(--titleText);}
+	.navbar-brand {
+		font-family: var(--titleFont);
+		color: var(--titleText);
+	}
+	.navbar-brand:hover {color:  var(--hoverText);}
+	.nav-link {
+		color: var(--titleText);
+		font-family: var(--bodyFont);
+	}
+	.nav-link:hover {color:  var(--hoverText);}
+
+	.glass-background {
+		margin: 75px;
+		margin-top: 85px;
+		color: var(--bodyText);
+		background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white */
+		backdrop-filter: blur(5px); /*  blur effect */
+		border-radius: 10px;
+		box-shadow: 0px 0px 2px 1px rgba(255, 255, 255, 0.6); /* subtle shadow */
+
+	}
+
+	.glass-feature-box {
+		margin: 20px;
+		color: var(--bodyText);
+
+	}
+
+
+</style>
+
 <head>
-<title>Page Title</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Include Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 </head>
-<body>
 
-<h1>H</h1>
-<p>paragraph.</p>
 
+<body class="website-background" id="wallpaper">
+	<button type="button" class="basic" onclick="flowerWallpaper()">1</button>
+	<button type="button" class="basic" onclick="glassWallpaper()">2</button>
+	<button type="button" class="basic" onclick="mossWallpaper()">3</button>
+
+	<div class="glass-background" id=mainBackground>
+		<!-- Navbar -->
+		<body class="website-background"> 
+			<nav class="navbar navbar-expand-lg navbar-light" style="navbar"> 
+				<a class="navbar-brand" href="{{ url_for('home') }}"  ></a> 
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+					aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav">
+
+						<!-- TODO Need to update page links -->
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('index') }}" >Home</a> 
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('index') }}" >GitHub</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('index') }}" >Garden</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('index') }}" >Contact</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</body>
+
+		<!-- Jumbotron Header -->
+		<div class="glass-feature-box">
+			<h1 >Welcome!</h1>
+			<h2 >I'm Caite</h2>
+		</div>
+
+		<!-- Feature Boxes -->
+		<div class="row">
+			<div class="col-md-4">
+				<div class="glass-feature-box">
+					<h3>Computer Engineering Graduate</h3>
+					<p>You are early to the party! This website is currently under construction. To find my GitHub account follow the link 
+						<a style="color: var(--bodyFont); text-decoration: underline;" href="https://github.com/caite21" target="_blank" rel="nofollow">here</a>
+					. more text hello there testin more text more text hello there testin more text more text hello there testin more text more text hello there testin more text more text hello there testin more text more text hello there testin more text more text hello there testin more text more text hello there  </p>
+
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="glass-feature-box">
+					<h3>Resume</h3>
+					<p>WIP text more text hello there testin more text more text hello there testin more text more text hello there testin more text more text hello there testin more text more text hello there testin more text more text hello there testin more text more text hello there testin more text more text hello</p>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="glass-feature-box">
+					<h3>Interests</h3>
+					<p>WIP hello there testin more text </p>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<script type="text/javascript">
+	function flowerWallpaper() {
+		document.getElementById("wallpaper").style.backgroundImage = "url('https://raw.githubusercontent.com/caite21/caite21.github.io/main/img/beige_flowers.png')";
+	}
+	function glassWallpaper() {
+		document.getElementById("wallpaper").style = "background-image: url('https://raw.githubusercontent.com/caite21/caite21.github.io/main/img/rainbow_glass.png'); "; 
+		document.getElementById("mainBackground").style = "background-color: rgba(255, 255, 255, 0.5);"; 
+	}
+	function mossWallpaper() {
+		document.getElementById("wallpaper").style = "background-image: url('https://raw.githubusercontent.com/caite21/caite21.github.io/main/img/moss_wall.png');"; 
+		document.getElementById("mainBackground").style = "background-color: rgba(255, 255, 255, 0.5);"; 
+	}
+
+	</script>	
 </body>
+
+
 </html>
